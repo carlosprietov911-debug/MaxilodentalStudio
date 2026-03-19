@@ -46,7 +46,7 @@ import { getPageInfo } from "../../../lib/wp";
                motion-safe:animate-[heroImageIn_.9s_cubic-bezier(.22,1,.36,1)_both]"
       >
         <div
-          class="relative w-full max-w-[22rem] pb-16 sm:max-w-[24rem] sm:pb-18 md:max-w-[27.5rem] md:pb-20 lg:max-w-[32.5rem] lg:pb-12"
+          class="relative w-full max-w-88 pb-16 sm:max-w-[24rem] sm:pb-18 md:max-w-110 md:pb-20 lg:max-w-130 lg:pb-12"
         >
           <!-- Imagen principal -->
           <div
@@ -54,7 +54,7 @@ import { getPageInfo } from "../../../lib/wp";
           >
             <Picture
               class="h-auto w-full object-contain transition duration-500 ease-out will-change-transform
-                     [filter:drop-shadow(0_12px_18px_rgba(0,0,0,0.18))_drop-shadow(0_28px_45px_rgba(0,0,0,0.14))]
+                     filter-[drop-shadow(0_12px_18px_rgba(0,0,0,0.18))_drop-shadow(0_28px_45px_rgba(0,0,0,0.14))]
                      group-hover:scale-[1.02] group-hover:-translate-y-1"
               src={portada}
               alt="imagen principal doctor"
@@ -76,8 +76,8 @@ import { getPageInfo } from "../../../lib/wp";
                    [animation-delay:220ms]"
           >
             <div
-              class="relative w-[86%] overflow-hidden rounded-[2rem]
-                     bg-gradient-to-br from-[#4DB4BF] via-[#3aa9b4] to-[#2e8f99]
+              class="relative w-[86%] overflow-hidden rounded-4xl
+                     bg-linear-to-br from-[#4DB4BF] via-[#3aa9b4] to-[#2e8f99]
                      px-5 py-4 text-center text-base font-extrabold text-white
                      shadow-[0_24px_60px_-35px_rgba(0,0,0,0.65)]
                      ring-1 ring-black/10 transition duration-500 ease-out
@@ -90,7 +90,7 @@ import { getPageInfo } from "../../../lib/wp";
                 aria-hidden="true"
                 class="pointer-events-none absolute inset-0 opacity-[0.16]
                        bg-[radial-gradient(rgba(255,255,255,.65)_1px,transparent_1px)]
-                       [background-size:10px_10px]"
+                       bg-size-[10px_10px]"
               ></div>
 
               <div

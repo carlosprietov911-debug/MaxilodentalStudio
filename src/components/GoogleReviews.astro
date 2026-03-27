@@ -1,0 +1,524 @@
+---
+// GoogleReviews.astro
+// Edita el array `reviews` con tus datos reales
+
+const reviews = [
+  {
+    name: "Doris Delcampo",
+    date: "hace 9 meses",
+    avatar: "",
+    text: "Excelente atención, recomiendo a Maxilodental Studio Fusagasugá para tratamientos odontológicos, servicio increíble.",
+    rating: 5,
+  },
+  {
+    name: "Consuelo Vallejo",
+    date: "hace 1 año",
+    avatar: "",
+    text: "Excelente excelente.",
+    rating: 5,
+  },
+  {
+    name: "Jorge Grismaldo",
+    date: "hace 1 año",
+    avatar: "",
+    text: "La atención y la experiencia de los dos profesionales me dieron la confianza para colocar mi tratamiento en sus manos.",
+    rating: 5,
+  },
+  {
+    name: "María García",
+    date: "hace 2 meses",
+    avatar: "",
+    text: "Muy buena atención desde el primer momento. El equipo es muy profesional y el ambiente es muy tranquilo.",
+    rating: 5,
+  },
+  {
+    name: "Carlos López",
+    date: "hace 6 meses",
+    avatar: "",
+    text: "Excelente servicio, muy recomendado. Los tratamientos son de alta calidad y el personal muy amable.",
+    rating: 5,
+  },
+  {
+    name: "Ana Martínez",
+    date: "hace 3 meses",
+    avatar: "",
+    text: "Me sentí muy cómoda durante todo el proceso. Profesionales de verdad, 100% recomendados.",
+    rating: 5,
+  },
+];
+
+const starPath = "M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z";
+
+const googlePaths = [
+  { d: "M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z", fill: "#4285F4" },
+  { d: "M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z", fill: "#34A853" },
+  { d: "M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z", fill: "#FBBC05" },
+  { d: "M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z", fill: "#EA4335" },
+];
+
+const GMAPS = "https://www.google.com/maps/place/maxilodentalstudio/@4.3350862,-74.3698314,17z/data=!4m8!3m7!1s0x8e3f04f325704253:0xb200f51fc73923f5!8m2!3d4.3350862!4d-74.3672565!9m1!1b1!16s%2Fg%2F11dz0kfnqr?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D";
+---
+
+<section class="gr-section" id="reviews">
+  <div class="gr-bg" aria-hidden="true">
+    <div class="gr-orb gr-orb-1"></div>
+    <div class="gr-orb gr-orb-2"></div>
+  </div>
+
+  <div class="gr-container">
+
+    <!-- Header -->
+    <div class="gr-header" data-reveal>
+      <span class="gr-eyebrow">
+        <span class="gr-dot-deco"></span>
+        Lo que dicen nuestros pacientes
+        <span class="gr-dot-deco"></span>
+      </span>
+
+      <h2 class="gr-title">
+        Reseñas que
+        <span class="gr-title-em">generan confianza</span>
+      </h2>
+
+      <p class="gr-subtitle">
+        Experiencias reales de pacientes que vivieron un proceso cercano,
+        claro y pensado para su bienestar.
+      </p>
+
+      <div class="gr-badge">
+        <svg class="gr-gicon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {googlePaths.map(p => <path d={p.d} fill={p.fill} />)}
+        </svg>
+        <span class="gr-badge-name">Google Reviews</span>
+        <span class="gr-badge-sep"></span>
+        <div class="gr-stars-row">
+          {Array(5).fill(null).map(() => (
+            <svg viewBox="0 0 20 20" fill="currentColor" class="gr-star-sm">
+              <path d={starPath}/>
+            </svg>
+          ))}
+        </div>
+        <span class="gr-badge-score">4.9 · Excelente</span>
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+    <div class="gr-wrap" data-reveal data-delay="150">
+      <div class="gr-track" id="grTrack">
+        {[...reviews, ...reviews].map((r, i) => {
+          const isClone = i >= reviews.length;
+          return (
+            <a
+              href={GMAPS}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`gr-card${isClone ? ' gr-clone' : ''}`}
+              data-index={String(i % reviews.length)}
+              aria-hidden={isClone ? 'true' : 'false'}
+              aria-label={`Ver reseña de ${r.name} en Google Maps`}
+            >
+              <div class="gr-card-inner">
+                <!-- Google icon top-right -->
+                <div class="gr-card-gicon">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="gr-card-google">
+                    {googlePaths.map(p => <path d={p.d} fill={p.fill} />)}
+                  </svg>
+                </div>
+
+                <!-- Header card -->
+                <div class="gr-card-head">
+                  {r.avatar ? (
+                    <img src={r.avatar} alt={r.name} class="gr-avatar-img" loading="lazy" decoding="async" />
+                  ) : (
+                    <div class="gr-avatar-generic" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="3.5" fill="rgba(36,23,23,0.18)"/>
+                        <path d="M4.5 20c0-4.142 3.358-7.5 7.5-7.5s7.5 3.358 7.5 7.5" stroke="rgba(36,23,23,0.18)" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                      </svg>
+                    </div>
+                  )}
+                  <div class="gr-card-meta">
+                    <span class="gr-card-name">{r.name}</span>
+                    <span class="gr-card-date">{r.date}</span>
+                  </div>
+                </div>
+
+                <!-- Estrellas -->
+                <div class="gr-card-stars">
+                  {Array(r.rating).fill(null).map(() => (
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="gr-card-star">
+                      <path d={starPath}/>
+                    </svg>
+                  ))}
+                  <svg viewBox="0 0 24 24" fill="#4285F4" class="gr-verified" aria-label="Reseña verificada">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#4285F4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12l2 2 4-4" stroke="#4285F4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+
+                <!-- Texto -->
+                <p class="gr-card-text">{r.text}</p>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <div class="gr-fade gr-fade-l" aria-hidden="true"></div>
+      <div class="gr-fade gr-fade-r" aria-hidden="true"></div>
+    </div>
+
+    <!-- Controles -->
+    <div class="gr-controls" data-reveal data-delay="300">
+      <button class="gr-ctrl" id="grPrev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15.75 19.5L8.25 12l7.5-7.5"/>
+        </svg>
+      </button>
+
+      <div class="gr-dots" id="grDots">
+        {reviews.map((_, i) => (
+          <button
+            class={`gr-dot${i === 0 ? ' gr-dot-active' : ''}`}
+            data-index={String(i)}
+            aria-label={`Reseña ${i + 1}`}
+          ></button>
+        ))}
+      </div>
+
+      <button class="gr-ctrl" id="grNext" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .gr-section {
+    --bg:      #f8efef;
+    --surface: rgba(255,255,255,0.90);
+    --border:  rgba(255,255,255,0.90);
+    --dark:    #241717;
+    --mid:     #5c5f66;
+    --soft:    #8a7a7a;
+    --rose:    #d7c2c2;
+    --sh-sm:   0 4px 16px rgba(0,0,0,0.05);
+    --sh-md:   0 10px 30px rgba(0,0,0,0.07);
+
+    position: relative;
+    background: var(--bg);
+    overflow: hidden;
+    padding: 96px 0 80px;
+  }
+
+  /* Fondo */
+  .gr-bg { position: absolute; inset: 0; pointer-events: none; }
+  .gr-orb { position: absolute; border-radius: 50%; filter: blur(64px); }
+  .gr-orb-1 {
+    width: 560px; height: 560px;
+    background: radial-gradient(circle, rgba(77,180,191,0.10) 0%, transparent 70%);
+    top: -160px; right: -80px;
+  }
+  .gr-orb-2 {
+    width: 460px; height: 460px;
+    background: radial-gradient(circle, rgba(215,194,194,0.28) 0%, transparent 70%);
+    bottom: -100px; left: -60px;
+  }
+
+  /* Container */
+  .gr-container {
+    position: relative; z-index: 2;
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+  }
+
+  /* Header */
+  .gr-header { text-align: center; margin-bottom: 52px; }
+
+  .gr-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--soft); margin-bottom: 18px;
+  }
+  .gr-dot-deco {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--rose);
+  }
+  .gr-title {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.04em; color: var(--dark); margin: 0 0 16px;
+  }
+  .gr-title-em { display: block; font-weight: 500; }
+  .gr-subtitle {
+    max-width: 520px; margin: 0 auto 24px;
+    font-size: 1.05rem; line-height: 1.65; color: var(--mid);
+  }
+
+  /* Badge */
+  .gr-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px; padding: 9px 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: var(--sh-sm);
+    font-size: 13px; color: var(--mid);
+  }
+  .gr-gicon { width: 17px; height: 17px; flex-shrink: 0; }
+  .gr-badge-name { font-weight: 500; color: var(--dark); }
+  .gr-badge-sep { display: block; width: 1px; height: 14px; background: var(--rose); opacity: 0.6; }
+  .gr-stars-row { display: flex; gap: 2px; }
+  .gr-star-sm { width: 13px; height: 13px; color: #f59e0b; }
+  .gr-badge-score { font-weight: 600; font-size: 12px; color: var(--dark); }
+
+  /* Carrusel */
+  .gr-wrap { position: relative; overflow: hidden; padding: 12px 0 20px; }
+  .gr-track {
+    display: flex; gap: 14px;
+    will-change: transform; cursor: grab; user-select: none;
+  }
+  .gr-track:active { cursor: grabbing; }
+
+  /* Cards */
+  .gr-card {
+    flex-shrink: 0; width: 280px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+    text-decoration: none; display: block;
+    cursor: pointer;
+  }
+  .gr-card:hover { transform: translateY(-4px); }
+  .gr-card:hover .gr-card-inner {
+    box-shadow: 0 16px 40px rgba(0,0,0,0.10);
+    border-color: rgba(77,180,191,0.25);
+  }
+
+  .gr-card-inner {
+    position: relative;
+    border-radius: 16px;
+    background: white;
+    border: 1px solid rgba(230,222,222,0.7);
+    box-shadow: var(--sh-md);
+    padding: 18px;
+    height: 100%;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* Google icon top right */
+  .gr-card-gicon {
+    position: absolute; top: 16px; right: 16px;
+  }
+  .gr-card-google { width: 18px; height: 18px; }
+
+  /* Avatar + meta */
+  .gr-card-head {
+    display: flex; align-items: center; gap: 10px;
+    padding-right: 28px; /* espacio para el icono G */
+  }
+
+  .gr-avatar-img {
+    width: 40px; height: 40px;
+    border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    border: 2px solid rgba(230,222,222,0.6);
+  }
+
+  .gr-avatar-generic {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: #f0e8e8;
+    border: 1.5px solid rgba(215,194,194,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .gr-avatar-generic svg { width: 22px; height: 22px; }
+
+  .gr-card-meta {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .gr-card-name {
+    font-size: 14px; font-weight: 600;
+    color: var(--dark); line-height: 1.3;
+  }
+  .gr-card-date {
+    font-size: 12px; color: var(--soft); line-height: 1;
+  }
+
+  /* Estrellas */
+  .gr-card-stars {
+    display: flex; align-items: center; gap: 2px;
+  }
+  .gr-card-star { width: 16px; height: 16px; color: #f59e0b; }
+  .gr-verified  { width: 16px; height: 16px; margin-left: 4px; }
+
+  /* Texto */
+  .gr-card-text {
+    font-size: 13.5px; line-height: 1.6;
+    color: #403636; margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Fades */
+  .gr-fade { position: absolute; top: 0; bottom: 0; width: 80px; pointer-events: none; z-index: 10; }
+  .gr-fade-l { left: 0;  background: linear-gradient(to right, var(--bg), transparent); }
+  .gr-fade-r { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+
+  /* Controles */
+  .gr-controls {
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; margin-top: 36px;
+  }
+  .gr-ctrl {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.9);
+    background: white; color: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: var(--sh-sm);
+    transition: all 0.22s ease;
+  }
+  .gr-ctrl svg { width: 17px; height: 17px; }
+  .gr-ctrl:hover { box-shadow: var(--sh-md); transform: scale(1.06); }
+
+  .gr-dots { display: flex; gap: 7px; align-items: center; }
+  .gr-dot {
+    width: 6px; height: 6px; border-radius: 50%; border: none;
+    background: var(--rose); opacity: 0.45; cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  .gr-dot-active { width: 26px; border-radius: 3px; opacity: 1; background: var(--dark); }
+
+  /* Reveal */
+  [data-reveal] {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .gr-section   { padding: 64px 0 48px; }
+    .gr-card      { width: 240px; }
+    .gr-title     { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+    .gr-subtitle  { font-size: 0.95rem; }
+    .gr-badge     { flex-wrap: wrap; justify-content: center; font-size: 12px; }
+  }
+  @media (max-width: 480px) {
+    .gr-section   { padding: 52px 0 40px; }
+    .gr-container { padding: 0 16px; }
+    .gr-card      { width: 220px; }
+    .gr-track     { gap: 10px; }
+    .gr-fade      { width: 48px; }
+    .gr-header    { margin-bottom: 36px; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* ── Reveal ─────────────────── */
+    const revealEls = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        setTimeout(() => el.classList.add('revealed'), parseInt(el.dataset.delay ?? '0'));
+        revealObs.unobserve(el);
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    /* ── Carousel ───────────────── */
+    const trackEl = document.getElementById('grTrack');
+    if (!trackEl) return;
+    const track: HTMLElement = trackEl;
+
+    const cards  = track.querySelectorAll<HTMLElement>('.gr-card:not(.gr-clone)');
+    const dots   = document.querySelectorAll<HTMLElement>('.gr-dot');
+
+    const getCardW = () => {
+      const w = window.innerWidth;
+      if (w <= 480) return 220 + 10;
+      if (w <= 768) return 240 + 12;
+      return 280 + 14;
+    };
+    let CARD_W   = getCardW();
+    let cur      = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    let dragging = false;
+    let startX   = 0;
+    let dragBase = 0;
+
+    const updateDots = (i: number) =>
+      dots.forEach((d, j) => d.classList.toggle('gr-dot-active', j === i));
+
+    function goTo(index: number) {
+      cur = ((index % cards.length) + cards.length) % cards.length;
+      track.style.transition = 'transform 0.65s cubic-bezier(0.77,0,0.175,1)';
+      track.style.transform  = `translateX(-${cur * CARD_W}px)`;
+      updateDots(cur);
+    }
+
+    const next = () => goTo(cur + 1);
+    const prev = () => goTo(cur - 1);
+    const play = () => { timer = setInterval(next, 4000); };
+    const stop = () => { clearInterval(timer); };
+
+    document.getElementById('grNext')?.addEventListener('click', () => { stop(); next(); play(); });
+    document.getElementById('grPrev')?.addEventListener('click', () => { stop(); prev(); play(); });
+    dots.forEach((d, i) => d.addEventListener('click', () => { stop(); goTo(i); play(); }));
+
+    /* Drag */
+    track.addEventListener('mousedown', (e: MouseEvent) => {
+      dragging = true; startX = e.pageX - track.offsetLeft;
+      dragBase = cur * CARD_W; track.style.transition = 'none'; stop();
+    });
+    document.addEventListener('mouseup', (e: MouseEvent) => {
+      if (!dragging) return; dragging = false;
+      const diff = startX - (e.pageX - track.offsetLeft);
+      Math.abs(diff) > 60 ? (diff > 0 ? next() : prev()) : goTo(cur);
+      play();
+    });
+    document.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!dragging) return; e.preventDefault();
+      track.style.transform = `translateX(${-(dragBase - (e.pageX - track.offsetLeft - startX))}px)`;
+    });
+
+    /* Touch */
+    let tx = 0;
+    track.addEventListener('touchstart', (e: TouchEvent) => { tx = e.touches[0].clientX; stop(); }, { passive: true });
+    track.addEventListener('touchend',   (e: TouchEvent) => {
+      const diff = tx - e.changedTouches[0].clientX;
+      Math.abs(diff) > 50 ? (diff > 0 ? next() : prev()) : goTo(cur);
+      play();
+    }, { passive: true });
+
+    track.addEventListener('mouseenter', stop);
+    track.addEventListener('mouseleave', play);
+
+    /* Stagger entrada */
+    const cardEls = document.querySelectorAll<HTMLElement>('.gr-card:not(.gr-clone)');
+    const cardObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target as HTMLElement;
+        const idx  = parseInt(card.dataset.index ?? '0');
+        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, idx * 60);
+        cardObs.unobserve(card);
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+
+    cardEls.forEach(card => {
+      card.style.opacity    = '0';
+      card.style.transform  = 'translateY(16px)';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      cardObs.observe(card);
+    });
+
+    goTo(0);
+    play();
+
+    window.addEventListener('resize', () => { CARD_W = getCardW(); goTo(cur); });
+  });
+</script>

@@ -16,6 +16,8 @@ const {
   items = [],
   interval = 5000,
 } = Astro.props as Props;
+
+const hasNotes = items.some((item) => Boolean(item.note));
 ---
 
 {
@@ -25,7 +27,7 @@ const {
       data-interval={interval}
       class="relative w-full overflow-hidden rounded-[22px] border border-[#e7e0db] bg-[linear-gradient(180deg,rgba(246,243,241,0.94)_0%,rgba(241,237,234,0.9)_100%)] px-4 py-3.5 shadow-[0_12px_24px_rgba(45,31,28,0.045)] backdrop-blur-sm md:px-5 md:py-3.5"
     >
-      <div class="pointer-events-none absolute inset-0">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
         <div class="absolute -left-10 top-0 h-20 w-20 rounded-full bg-[#ebe3de]/60 blur-2xl"></div>
         <div class="absolute -right-8 bottom-0 h-20 w-20 rounded-full bg-[#e3dbd6]/55 blur-2xl"></div>
         <div class="absolute inset-x-0 top-0 h-px bg-white/65"></div>
@@ -34,13 +36,13 @@ const {
       <div class="relative z-10">
         <div class="flex items-start justify-between gap-3">
           <div class="min-w-0">
-            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[#8f7b74]">
+            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-[#7a6862]">
               {title}
             </p>
 
             <div class="mt-1.5 flex items-center gap-2.5">
               <span class="h-px w-7 bg-[#cdbdb5]"></span>
-              <p class="text-[0.62rem] font-medium uppercase tracking-[0.2em] text-[#a08e87]">
+              <p class="text-[0.62rem] font-medium uppercase tracking-[0.2em] text-[#8c7a73]">
                 Perfil académico
               </p>
             </div>
@@ -48,7 +50,7 @@ const {
 
           {
             items.length > 1 && (
-              <div class="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#ded4ce] bg-[#f7f4f2] px-2.5 py-[0.3rem] text-[0.62rem] font-semibold tracking-[0.12em] text-[#7f6b64] shadow-[0_4px_10px_rgba(44,30,27,0.04)]">
+              <div class="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#ded4ce] bg-[#f7f4f2] px-2.5 py-[0.3rem] text-[0.62rem] font-semibold tracking-[0.12em] text-[#6f5e58] shadow-[0_4px_10px_rgba(44,30,27,0.04)]">
                 <span data-current>01</span>
                 <span class="opacity-45">/</span>
                 <span>{String(items.length).padStart(2, "0")}</span>
@@ -57,20 +59,25 @@ const {
           }
         </div>
 
-        <div class="relative mt-3.5 min-h-16 md:min-h-[3.9rem]">
+        <div
+          class:list={[
+            "relative mt-3.5",
+            hasNotes ? "min-h-32 md:min-h-[6.8rem]" : "min-h-16 md:min-h-[3.9rem]",
+          ]}
+        >
           {items.map((item, index) => (
             <div
               data-slide
               aria-hidden={index === 0 ? "false" : "true"}
               class:list={[
-                "transition-all duration-500 ease-out",
+                "transition-[transform,opacity] duration-500 ease-out",
                 index === 0
                   ? "relative translate-y-0 opacity-100"
                   : "pointer-events-none absolute inset-0 translate-y-2 opacity-0",
               ]}
             >
               {item.label && (
-                <p class="mb-1 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-[#9b847d]">
+                <p class="mb-1 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-[#8b736c]">
                   {item.label}
                 </p>
               )}
@@ -80,7 +87,7 @@ const {
               </p>
 
               {item.note && (
-                <p class="mt-1.5 max-w-xl text-[0.84rem] leading-relaxed text-[#62534e]">
+                <p class="mt-1.5 max-w-xl text-[0.84rem] leading-relaxed text-[#5f514c]">
                   {item.note}
                 </p>
               )}
@@ -98,8 +105,9 @@ const {
                     data-dot
                     data-index={index}
                     aria-label={`Ir al elemento ${index + 1}`}
+                    aria-pressed={index === 0 ? "true" : "false"}
                     class:list={[
-                      "h-1.5 rounded-full transition-all duration-300",
+                      "h-1.5 rounded-full transition-[width,background-color] duration-300",
                       index === 0
                         ? "w-5 bg-[#9f847b]"
                         : "w-1.5 bg-[#d6c9c3] hover:bg-[#c6b6af]",
@@ -113,7 +121,7 @@ const {
                   type="button"
                   data-prev
                   aria-label="Ver formación anterior"
-                  class="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#ddd3cd] bg-[#f8f5f3] text-[#5d4d48] shadow-[0_6px_12px_rgba(44,30,27,0.035)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+                  class="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#ddd3cd] bg-[#f8f5f3] text-[#5d4d48] shadow-[0_6px_12px_rgba(44,30,27,0.035)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +139,7 @@ const {
                   type="button"
                   data-next
                   aria-label="Ver siguiente formación"
-                  class="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#ddd3cd] bg-[#f8f5f3] text-[#5d4d48] shadow-[0_6px_12px_rgba(44,30,27,0.035)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
+                  class="flex h-8.5 w-8.5 items-center justify-center rounded-full border border-[#ddd3cd] bg-[#f8f5f3] text-[#5d4d48] shadow-[0_6px_12px_rgba(44,30,27,0.035)] transition-[transform,background-color] duration-300 hover:-translate-y-0.5 hover:bg-white"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -155,31 +163,25 @@ const {
 
 <script>
   function initFormationSliders(): void {
-    const sliders = document.querySelectorAll<HTMLElement>(
-      "[data-formation-slider]"
-    );
+    const sliders = document.querySelectorAll<HTMLElement>("[data-formation-slider]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     sliders.forEach((slider: HTMLElement) => {
       if (slider.dataset.ready === "true") return;
       slider.dataset.ready = "true";
 
-      const slides = Array.from(
-        slider.querySelectorAll<HTMLElement>("[data-slide]")
-      );
-
+      const slides = Array.from(slider.querySelectorAll<HTMLElement>("[data-slide]"));
       const prevBtn = slider.querySelector<HTMLButtonElement>("[data-prev]");
       const nextBtn = slider.querySelector<HTMLButtonElement>("[data-next]");
-      const dots = Array.from(
-        slider.querySelectorAll<HTMLButtonElement>("[data-dot]")
-      );
+      const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>("[data-dot]"));
       const currentEl = slider.querySelector<HTMLElement>("[data-current]");
-
       const intervalTime = Number(slider.dataset.interval ?? "5000");
 
       if (!slides.length) return;
 
       let current = 0;
       let autoPlay: ReturnType<typeof window.setInterval> | undefined;
+      let isInView = true;
 
       const render = (index: number): void => {
         slides.forEach((slide, i) => {
@@ -206,6 +208,7 @@ const {
 
           dot.classList.toggle("w-1.5", !active);
           dot.classList.toggle("bg-[#d6c9c3]", !active);
+          dot.setAttribute("aria-pressed", active ? "true" : "false");
         });
 
         if (currentEl) {
@@ -230,6 +233,10 @@ const {
 
       const start = (): void => {
         if (slides.length <= 1) return;
+        if (reduceMotion.matches) return;
+        if (document.hidden) return;
+        if (!isInView) return;
+
         stop();
         autoPlay = window.setInterval(() => {
           next();
@@ -257,6 +264,32 @@ const {
       slider.addEventListener("mouseleave", start);
       slider.addEventListener("focusin", stop);
       slider.addEventListener("focusout", start);
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          stop();
+        } else {
+          start();
+        }
+      });
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+            isInView = Boolean(entry?.isIntersecting);
+
+            if (isInView) {
+              start();
+            } else {
+              stop();
+            }
+          },
+          { threshold: 0.2 }
+        );
+
+        observer.observe(slider);
+      }
 
       render(current);
       start();

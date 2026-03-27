@@ -1,12 +1,12 @@
 ---
-import dentalShape1 from "../../../assets/dentaln.png?url";
-import dentalShape2 from "../../../assets/dentaln1.png?url";
+import { Picture } from "astro:assets";
 
-import draImg from "../../../assets/Yessica.png?url";
-import drImg from "../../../assets/Artur.jpeg?url";
+import dentalShape1 from "../../../assets/dentaln.png";
+import dentalShape2 from "../../../assets/dentaln1.png";
+import draImg from "../../../assets/Yessica.png";
+import drImg from "../../../assets/Artur.jpeg";
 import mariposa from "../../../assets/Mariposa.svg?url";
 import FormationSlider from "../../ui/FormationSlider.astro";
-
 const draInstagram =
   "https://www.instagram.com/yessicafmaxilo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
 const drInstagram =
@@ -22,8 +22,13 @@ const formacionDra = [
     text: "Cirugía oral y maxilofacial",
   },
   {
-    label: "Curso",
-    text: "Armonización facial y estética complementaria",
+    label: "ACCOMF",
+    text: "Miembro de la Asociación Colombiana de Cirugía Oral y Maxilofacial",
+    note: "Asociación científica que reúne especialistas en cirugía oral y maxilofacial en Colombia y promueve el desarrollo académico, científico y gremial de la especialidad.",
+  },
+  {
+    label: "ACOCEF",
+    text: "Miembro de la Asociación Colombiana de Medicina y Cirugía Estética Facial",
   },
 ];
 
@@ -41,63 +46,74 @@ const formacionDr = [
     text: "Diseño de sonrisa y tratamientos restauradores",
   },
 ];
+
+const doctorCardWrap =
+  "relative mx-auto w-full max-w-[21.25rem] sm:max-w-[23rem] md:max-w-[24rem] lg:mx-0 lg:max-w-[24.5rem]";
+
+const doctorFrame =
+  "relative aspect-[4/5] overflow-hidden rounded-[26px] bg-[#eadede] shadow-[0_22px_48px_rgba(62,40,40,0.16)] md:rounded-[28px]";
+
+const doctorImage =
+  "h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]";
 ---
 
 <section
   id="nosotros-equipo"
-  class="relative overflow-hidden bg-[#d9d9d9] px-6 py-20 md:px-10 lg:px-12 lg:py-24"
+  class="relative overflow-hidden px-6 py-20 md:px-10 md:py-24 lg:px-12"
 >
-  <img
+  <Picture
     src={dentalShape2}
     alt=""
     aria-hidden="true"
-    class="pointer-events-none absolute right-1/3 -bottom-25 w-90 opacity-60"
+    widths={[160, 240, 320]}
+    sizes="(min-width: 1280px) 320px, 240px"
+    formats={["avif", "webp"]}
+    quality={34}
+    loading="lazy"
+    decoding="async"
+    class="pointer-events-none absolute -bottom-18 right-[12%] hidden w-48 opacity-35 lg:block xl:w-60"
   />
-  <!--
-    BUG FIX: `-bottom-25` no existe en Tailwind v3 (máximo estándar es 24).
-    Reemplazado por `bottom-[-6.25rem]` (equivalente exacto).
-  -->
 
-  <img
+  <Picture
     src={dentalShape1}
     alt=""
     aria-hidden="true"
-    class="pointer-events-none absolute left-1/3 top-1/2 w-90 -translate-x-1/2 -translate-y-1/2 opacity-60"
+    widths={[160, 240, 320]}
+    sizes="(min-width: 1280px) 320px, 240px"
+    formats={["avif", "webp"]}
+    quality={34}
+    loading="lazy"
+    decoding="async"
+    class="pointer-events-none absolute left-[18%] top-1/2 hidden w-48 -translate-x-1/2 -translate-y-1/2 opacity-35 lg:block xl:w-60"
   />
-  <!--
-    BUG FIX: `w-90` no es estándar en Tailwind v3.
-    Reemplazado por `w-[22.5rem]` (equivalente exacto a 90 × 0.25rem).
-  -->
 
   <div class="mx-auto max-w-7xl">
-    <div class="mb-14 text-center lg:mb-18">
-      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.28em] text-[#b68f8f]">
+    <div class="mb-12 text-center lg:mb-16">
+      <p
+        class="mb-3 text-sm font-semibold uppercase tracking-[0.28em] text-[#6f5252]"
+      >
         Nuestro equipo
       </p>
-      <h2 class="text-4xl font-extrabold tracking-tight text-[#241717] md:text-5xl">
+      <h2
+        class="text-4xl font-extrabold tracking-tight text-[#221515] md:text-5xl"
+      >
         Nosotros
       </h2>
     </div>
 
-    <!--
-      MOBILE: `space-y-20` era excesivo en móvil (~80px entre bloques).
-      Reducido a `space-y-14 lg:space-y-28` para mejor ritmo visual en pantallas pequeñas.
-    -->
-    <div class="space-y-14 lg:space-y-28">
-
-      <!-- ── BLOQUE 1 ─────────────────────────── -->
-      <article class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
+    <div class="space-y-14 lg:space-y-24">
+      <!-- BLOQUE 1 -->
+      <article class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <!-- Columna visual -->
         <div class="group order-2 lg:order-1 lg:justify-self-start">
-          <div class="mb-5 flex flex-col items-center gap-3 lg:mb-6 lg:items-start lg:gap-4">
-            <div class="flex items-center justify-center gap-3 lg:justify-start">
-              <!--
-                MOBILE: `text-[2.6rem]` podía desbordar en 375px.
-                Reducido a `text-[2rem]` base y `md:text-[2.5rem]` en adelante.
-              -->
+          <div
+            class="mb-5 flex flex-col items-center gap-3 lg:mb-6 lg:items-start"
+          >
+            <div
+              class="flex items-center justify-center gap-3 lg:justify-start"
+            >
               <h3
-                class="font-dancing text-center text-[2rem] font-bold leading-none text-[#241717] md:text-[2.5rem] lg:text-left"
+                class="font-dancing text-center text-[1.9rem] font-bold leading-none text-[#221515] md:text-[2.3rem] lg:text-left"
               >
                 Dra. Yessica Alvarado
               </h3>
@@ -105,8 +121,9 @@ const formacionDr = [
               <span class="shrink-0">
                 <img
                   src={mariposa}
-                  alt="Mariposa decorativa"
-                  class="h-8 w-8 object-contain md:h-9 md:w-9"
+                  alt=""
+                  aria-hidden="true"
+                  class="h-7 w-7 object-contain md:h-8 md:w-8"
                 />
               </span>
             </div>
@@ -116,16 +133,16 @@ const formacionDr = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram de la Dra. Yessica Alvarado"
-              class="inline-flex items-center gap-3 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-[#4d3f3f] shadow-[0_10px_24px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 md:hidden"
+              class="inline-flex items-center gap-3 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-[#4c3c3c] shadow-[0_8px_18px_rgba(0,0,0,0.07)] ring-1 ring-black/5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 md:hidden"
             >
               <span
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
+                class="flex h-9 w-9 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="h-5 w-5"
+                  class="h-4.5 w-4.5"
                   aria-hidden="true"
                 >
                   <path
@@ -144,44 +161,41 @@ const formacionDr = [
             aria-label="Ir al Instagram de la Dra. Yessica Alvarado"
             class="relative block pointer-events-none md:pointer-events-auto"
           >
-            <!--
-              BUG FIX: `max-w-120` no es estándar en Tailwind v3.
-              Reemplazado por `max-w-[30rem]` (equivalente exacto a 120 × 0.25rem).
-            -->
-            <div class="relative mx-auto w-full max-w-120 lg:mx-0">
+            <div class={doctorCardWrap}>
               <div
-                class="absolute inset-0 translate-x-4 translate-y-4 rounded-[28px] bg-[#dbcfcf] opacity-50 blur-[2px] md:rounded-[30px]"
+                aria-hidden="true"
+                class="absolute inset-0 translate-x-3 translate-y-3 rounded-[26px] bg-[#dbcfcf] opacity-45 blur-[2px] md:rounded-[28px]"
               >
               </div>
 
-              <div
-                class="relative overflow-hidden rounded-[28px] bg-[#eadede] shadow-[0_22px_50px_rgba(62,40,40,0.18)] md:rounded-[30px]"
-              >
-                <!--
-                  BUG FIX: `h-105` no es estándar en Tailwind v3.
-                  MOBILE: altura reducida a `h-80` en móvil para no ocupar toda la pantalla.
-                  Reemplazado por `h-80 md:h-[26.25rem]` (h-105 = 26.25rem).
-                -->
-                <img
+              <div class={doctorFrame}>
+                <Picture
                   src={draImg}
                   alt="Dra. Yessica Alvarado"
-                  class="h-80 w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03] md:h-105"
+                  widths={[320, 420, 560, 760]}
+                  sizes="(min-width: 1024px) 392px, (min-width: 768px) 384px, 86vw"
+                  formats={["avif", "webp"]}
+                  quality={54}
+                  loading="lazy"
+                  decoding="async"
+                  class={`${doctorImage} object-[center_18%]`}
                 />
 
                 <div
-                  class="absolute inset-0 hidden items-end justify-center bg-linear-to-t from-black/35 via-black/5 to-transparent opacity-0 transition-all duration-300 md:flex md:group-hover:opacity-100"
+                  aria-hidden="true"
+                  class="absolute inset-0 hidden items-end justify-center bg-linear-to-t from-black/30 via-black/5 to-transparent opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100"
                 >
                   <span
-                    class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-medium text-[#3f3131] shadow-[0_12px_24px_rgba(0,0,0,0.14)]"
+                    class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-2 text-sm font-medium text-[#3f3131] shadow-[0_10px_20px_rgba(0,0,0,0.12)]"
                   >
                     <span
-                      class="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
+                      class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="h-4 w-4"
+                        class="h-3.5 w-3.5"
                       >
                         <path
                           d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm8.88 1.62a1.13 1.13 0 1 1 0 2.26 1.13 1.13 0 0 1 0-2.26ZM12 6.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 6.5Zm0 1.5A4 4 0 1 0 16 12a4 4 0 0 0-4-4Z"
@@ -194,24 +208,26 @@ const formacionDr = [
               </div>
             </div>
           </a>
-
-          <!-- Slider móvil: después de la imagen -->
-          <div class="mt-5 w-full md:hidden">
-            <FormationSlider items={formacionDra} interval={5000} />
+          <div class="mt-4 flex justify-center md:hidden lg:justify-start">
+            <FormationSlider items={formacionDra} interval={5200} />
           </div>
         </div>
 
         <!-- Columna texto -->
         <div class="order-1 lg:order-2">
-          <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#b68f8f]">
+          <p
+            class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#6f5252]"
+          >
             Sobre mí
           </p>
 
-          <h3 class="mb-6 text-3xl font-bold leading-tight text-[#241717] md:text-4xl">
+          <h3
+            class="mb-6 text-3xl font-bold leading-tight text-[#221515] md:text-4xl"
+          >
             Cirugía maxilofacial con enfoque estético, funcional y humano
           </h3>
 
-          <div class="space-y-5 text-[1.05rem] leading-relaxed text-[#4d3f3f]">
+          <div class="space-y-5 text-[1.03rem] leading-relaxed text-[#4c3c3c]">
             <p>
               La Dra. Yessica Alvarado acompaña a pacientes que buscan mejorar
               su estética y bienestar facial mediante una atención cercana,
@@ -230,27 +246,29 @@ const formacionDr = [
             </p>
           </div>
 
-          <!-- Slider desktop -->
-          <div class="mt-8 hidden w-full max-w-2xl md:block">
-            <FormationSlider items={formacionDra} interval={5000} />
+          <div class="mt-7 hidden md:block max-w-md">
+            <FormationSlider items={formacionDra} interval={5200} />
           </div>
         </div>
       </article>
 
-      <!-- ── BLOQUE 2 ─────────────────────────── -->
-      <article class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
+      <!-- BLOQUE 2 -->
+      <article class="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <!-- Columna texto -->
         <div class="order-1">
-          <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#b68f8f]">
+          <p
+            class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#6f5252]"
+          >
             Sobre mí
           </p>
 
-          <h3 class="mb-6 text-3xl font-bold leading-tight text-[#241717] md:text-4xl">
+          <h3
+            class="mb-6 text-3xl font-bold leading-tight text-[#221515] md:text-4xl"
+          >
             Odontología estética y rehabilitación con experiencia clínica
           </h3>
 
-          <div class="space-y-5 text-[1.05rem] leading-relaxed text-[#4d3f3f]">
+          <div class="space-y-5 text-[1.03rem] leading-relaxed text-[#4c3c3c]">
             <p>
               El Dr. Carlos Prieto enfoca su práctica en odontología estética,
               rehabilitación y atención integral orientada a devolver función,
@@ -269,34 +287,31 @@ const formacionDr = [
             </p>
           </div>
 
-          <!-- Slider desktop -->
-          <div class="mt-8 hidden w-full max-w-2xl md:block">
-            <FormationSlider items={formacionDr} interval={5000} />
+          <div class="mt-7 hidden md:block max-w-md">
+            <FormationSlider items={formacionDr} interval={5200} />
           </div>
         </div>
 
         <!-- Columna visual -->
         <div class="group order-2 lg:justify-self-end">
-          <div class="mb-5 flex flex-col items-center gap-3 lg:mb-6 lg:items-start lg:gap-4">
-            <div class="flex items-center justify-center gap-3 lg:justify-start">
-              <!--
-                MOBILE: mismo ajuste de tamaño que Bloque 1 para consistencia.
-              -->
+          <div
+            class="mb-5 flex flex-col items-center gap-3 lg:mb-6 lg:items-start"
+          >
+            <div
+              class="flex items-center justify-center gap-3 lg:justify-start"
+            >
               <h3
-                class="font-dancing text-center text-[2rem] font-bold leading-none text-[#241717] md:text-[2.5rem] lg:text-left"
+                class="font-dancing text-center text-[1.9rem] font-bold leading-none text-[#221515] md:text-[2.3rem] lg:text-left"
               >
                 Dr. Carlos Prieto
               </h3>
 
-              <!--
-                BUG FIX: faltaba `shrink-0` que sí tiene el Bloque 1.
-                Sin él, la mariposa se deforma si el nombre es largo.
-              -->
               <span class="shrink-0">
                 <img
                   src={mariposa}
-                  alt="Mariposa decorativa"
-                  class="h-8 w-8 object-contain"
+                  alt=""
+                  aria-hidden="true"
+                  class="h-7 w-7 object-contain md:h-8 md:w-8"
                 />
               </span>
             </div>
@@ -306,16 +321,16 @@ const formacionDr = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram del Dr. Carlos Prieto"
-              class="inline-flex items-center gap-3 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-[#4d3f3f] shadow-[0_10px_24px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition duration-300 hover:-translate-y-1 md:hidden"
+              class="inline-flex items-center gap-3 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-[#4c3c3c] shadow-[0_8px_18px_rgba(0,0,0,0.07)] ring-1 ring-black/5 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 md:hidden"
             >
               <span
-                class="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
+                class="flex h-9 w-9 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="h-5 w-5"
+                  class="h-4.5 w-4.5"
                   aria-hidden="true"
                 >
                   <path
@@ -334,40 +349,41 @@ const formacionDr = [
             aria-label="Ir al Instagram del Dr. Carlos Prieto"
             class="relative block pointer-events-none md:pointer-events-auto"
           >
-            <!-- BUG FIX: `max-w-120` → `max-w-[30rem]` (mismo fix que Bloque 1) -->
-            <div class="relative mx-auto w-full max-w-120 lg:mx-0">
+            <div class={doctorCardWrap}>
               <div
-                class="absolute inset-0 translate-x-4 translate-y-4 rounded-[28px] bg-[#dbcfcf] opacity-50 blur-[2px] md:rounded-[30px]"
+                aria-hidden="true"
+                class="absolute inset-0 translate-x-3 translate-y-3 rounded-[26px] bg-[#dbcfcf] opacity-45 blur-[2px] md:rounded-[28px]"
               >
               </div>
 
-              <div
-                class="relative overflow-hidden rounded-[28px] bg-[#eadede] shadow-[0_22px_50px_rgba(62,40,40,0.18)] md:rounded-[30px]"
-              >
-                <!--
-                  BUG FIX + MOBILE: mismo fix de `h-105` / `h-125` que Bloque 1.
-                  `h-80` móvil / `md:h-[26.25rem]` desktop.
-                -->
-                <img
+              <div class={doctorFrame}>
+                <Picture
                   src={drImg}
                   alt="Dr. Carlos Prieto"
-                  class="h-80 w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03] md:h-105"
+                  widths={[320, 420, 560, 760]}
+                  sizes="(min-width: 1024px) 392px, (min-width: 768px) 384px, 86vw"
+                  formats={["avif", "webp"]}
+                  quality={54}
+                  loading="lazy"
+                  decoding="async"
+                  class={`${doctorImage} object-[center_20%]`}
                 />
 
                 <div
-                  class="absolute inset-0 hidden items-end justify-center bg-linear-to-t from-black/35 via-black/5 to-transparent opacity-0 transition-all duration-300 md:flex md:group-hover:opacity-100"
+                  aria-hidden="true"
+                  class="absolute inset-0 hidden items-end justify-center bg-linear-to-t from-black/30 via-black/5 to-transparent opacity-0 transition-opacity duration-300 md:flex md:group-hover:opacity-100"
                 >
                   <span
-                    class="mb-5 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-medium text-[#3f3131] shadow-[0_12px_24px_rgba(0,0,0,0.14)]"
+                    class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-2 text-sm font-medium text-[#3f3131] shadow-[0_10px_20px_rgba(0,0,0,0.12)]"
                   >
                     <span
-                      class="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
+                      class="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-[linear-gradient(135deg,#feda75_0%,#fa7e1e_32%,#d62976_60%,#962fbf_82%,#4f5bd5_100%)] text-white"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        class="h-4 w-4"
+                        class="h-3.5 w-3.5"
                       >
                         <path
                           d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm8.88 1.62a1.13 1.13 0 1 1 0 2.26 1.13 1.13 0 0 1 0-2.26ZM12 6.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 6.5Zm0 1.5A4 4 0 1 0 16 12a4 4 0 0 0-4-4Z"
@@ -381,13 +397,11 @@ const formacionDr = [
             </div>
           </a>
 
-          <!-- Slider móvil: después de la imagen -->
-          <div class="mt-5 w-full md:hidden">
-            <FormationSlider items={formacionDr} interval={5000} />
+          <div class="mt-4 flex justify-center md:hidden lg:justify-start">
+            <FormationSlider items={formacionDr} interval={5200} />
           </div>
         </div>
       </article>
-
     </div>
   </div>
 </section>

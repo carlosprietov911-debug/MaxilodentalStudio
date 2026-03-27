@@ -1,5 +1,5 @@
 ---
-import whatsappIcon from "../../assets/whatsapp.png?url";
+import WhatsappIcon from "../../assets/whatsapp.svg";
 
 type Props = {
   href?: string;
@@ -37,13 +37,11 @@ const {
            md:gap-4 md:pl-3.5 md:pr-6 md:py-3.5
            xl:pl-4 xl:pr-7 xl:py-4"
   >
-    <!-- halo -->
     <span
       aria-hidden="true"
       class="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.04))]"
     ></span>
 
-    <!-- icono -->
     <span class="relative inline-flex shrink-0 items-center justify-center">
       <span
         aria-hidden="true"
@@ -56,19 +54,15 @@ const {
                shadow-[0_14px_30px_rgba(37,211,102,0.30)]
                ring-1 ring-black/8
                md:h-[4.1rem] md:w-[4.1rem]
-               xl:h-[4.5rem] xl:w-[4.5rem]"
+               xl:h-18[4.5rem]"
       >
-        <img
-          src={whatsappIcon}
-          alt=""
+        <WhatsappIcon
           aria-hidden="true"
-          class="h-8 w-8 object-contain md:h-9 md:w-9 xl:h-10 xl:w-10"
-          loading="lazy"
+          class="h-8 w-8 md:h-9 md:w-9 xl:h-10 xl:w-10"
         />
       </span>
     </span>
 
-    <!-- texto -->
     <span class="relative hidden min-w-0 md:block">
       <span class="block text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8a756f] xl:text-[11px]">
         Atención inmediata
@@ -78,7 +72,6 @@ const {
       </span>
     </span>
 
-    <!-- versión móvil -->
     <span class="relative pr-1 text-sm font-semibold text-[#171717] md:hidden">
       WhatsApp
     </span>

@@ -1,10 +1,86 @@
 ---
-import heroServicios from "../../../assets/hero-servicios.png";
+import heroGeneral    from "../../../assets/hero-general.png"; // 👈 imagen slide 1
+import heroYessica   from "../../../assets/yessicaservicios.png"; // 👈 reemplaza con tu imagen slide 2
+import heroTecnologia from "../../../assets/hero-servicios.png"; // 👈 reemplaza con tu imagen slide 3
+
 import HeroServiciosSlider from "../../ui/HeroServiciosSlider.astro";
 
 const slides = [
+  /* ── 1. General de la clínica ──────────────────────────────────── */
   {
-    image: heroServicios,
+    image: heroGeneral,
+    alt: "Clínica Maxilodental Studio — atención odontológica integral",
+    title: "Odontología integral que",
+    titleHighlight: "cuida cada detalle de tu sonrisa",
+    description:
+      "En Maxilodental Studio combinamos tecnología de vanguardia, atención cercana y tratamientos de alta precisión para ofrecerte una experiencia odontológica cómoda, segura y con resultados naturales.",
+    primaryCta: {
+      label: "Ver todos los servicios",
+      href: "#servicios",
+    },
+    secondaryCta: {
+      label: "Agenda tu valoración",
+      href: "/contacto",
+    },
+    floatingCard: {
+      label: "Clínica integral",
+      text: "Atención cálida y resultados naturales",
+    },
+    cards: [
+      {
+        label: "Confianza",
+        text: "Acompañamiento cercano y orientación clara durante todo el proceso.",
+      },
+      {
+        label: "Calma",
+        text: "Una experiencia tranquila, humana y bien explicada desde el inicio.",
+      },
+      {
+        label: "Resultados",
+        text: "Sonrisas naturales y experiencias que generan seguridad y satisfacción.",
+      },
+    ],
+    tags: ["Testimonios reales", "Atención personalizada", "Resultados naturales"],
+  },
+
+  /* ── 2. Servicios especializados ───────────────────────────────── */
+  {
+    image: heroYessica,
+    alt: "Servicios odontológicos especializados en Maxilodental Studio",
+    title: "Tratamientos avanzados para",
+    titleHighlight: "transformar tu salud oral",
+    description:
+      "Implantes dentales, prótesis híbridas, cirugía ortognática, toxina botulínica para bruxismo, carillas estéticas y cirugía de cordales. Procedimientos de alta complejidad con acompañamiento profesional en cada etapa.",
+    primaryCta: {
+      label: "Ver servicios especializados",
+      href: "#servicios",
+    },
+    secondaryCta: {
+      label: "Agenda una valoración",
+      href: "/contacto",
+    },
+    floatingCard: {
+      label: "Alta especialización",
+      text: "Cirugía, implantes y rehabilitación oral",
+    },
+    cards: [
+      {
+        label: "Implantes y prótesis",
+        text: "Reemplazo de piezas con resultados estéticos y funcionales duraderos.",
+      },
+      {
+        label: "Cirugía ortognática",
+        text: "Corrección de maxilares para mejorar función masticatoria y armonía facial.",
+      },
+      {
+        label: "Toxina botulínica",
+        text: "Manejo de bruxismo, sonrisa gingival y arrugas de expresión con precisión.",
+      },
+    ],
+    tags: ["Implantes dentales", "Prótesis híbridas", "Cirugía de cordales"],
+  },
+  {
+    image: heroTecnologia,
     alt: "Radiografía dental sostenida por manos con guantes",
     title: "Odontología Estética y",
     titleHighlight: "Rehabilitación Digital",
@@ -38,41 +114,13 @@ const slides = [
     ],
     tags: ["Especialistas", "Tecnología digital", "Atención personalizada"],
   },
-  {
-    image: heroServicios,
-    alt: "Imagen clínica odontológica",
-    title: "Diseño de sonrisa con",
-    titleHighlight: "enfoque armónico",
-    description:
-      "Cada tratamiento se planifica según tus rasgos, función oral y objetivos estéticos, buscando resultados equilibrados, duraderos y naturales.",
-    primaryCta: {
-      label: "Conoce el proceso",
-      href: "#servicios1",
-    },
-    secondaryCta: {
-      label: "Solicita tu cita",
-      href: "/contacto",
-    },
-    floatingCard: {
-      label: "Resultado natural",
-      text: "Estética bien integrada a tu rostro",
-    },
-    cards: [
-      {
-        label: "Análisis",
-        text: "Valoración detallada para tomar decisiones precisas.",
-      },
-      {
-        label: "Diseño",
-        text: "Planeación visual y funcional antes del tratamiento.",
-      },
-      {
-        label: "Confianza",
-        text: "Acompañamiento claro en cada etapa del proceso.",
-      },
-    ],
-    tags: ["Planeación", "Estética dental", "Atención cercana"],
-  },
+  
+  
+  
+  
+
+
+  
 ];
 ---
 

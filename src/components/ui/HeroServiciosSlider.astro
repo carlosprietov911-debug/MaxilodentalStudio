@@ -2,22 +2,11 @@
 import { Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
-type HeroCard = {
-  label: string;
-  text: string;
-};
+type HeroCard = { label: string; text: string };
+type HeroCTA = { label: string; href: string };
+type HeroFloatingCard = { label: string; text: string };
 
-type HeroCTA = {
-  label: string;
-  href: string;
-};
-
-type HeroFloatingCard = {
-  label: string;
-  text: string;
-};
-
-type HeroSlide = {
+export type HeroSlide = {
   image: ImageMetadata | string;
   alt: string;
   title: string;
@@ -30,19 +19,19 @@ type HeroSlide = {
   tags?: string[];
 };
 
-type Props = {
+export type Props = {
   slides?: HeroSlide[];
   autoplay?: boolean;
   interval?: number;
 };
 
-const {
-  slides = [],
-  autoplay = true,
-  interval = 6000,
-} = Astro.props as Props;
+const { slides = [], autoplay = true, interval = 6000 } = Astro.props;
+const multi = slides.length > 1;
 
-const hasMultipleSlides = slides.length > 1;
+// ── Clases compartidas ────────────────────────────────────────────────────────
+const IMG_CLS = "relative z-10 h-auto w-full object-contain mask-fade-bottom transition duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01] drop-shadow-hero";
+const BTN_NAV = "group relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#e2d5d5] bg-white/90 shadow-[0_4px_14px_rgba(36,23,23,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(36,23,23,0.14)]";
+const IMG_SIZES = "(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 608px";
 ---
 
 <section
@@ -52,27 +41,33 @@ const hasMultipleSlides = slides.length > 1;
   data-interval={String(interval)}
 >
   <div class="mx-auto max-w-7xl px-6 pt-2 pb-12 md:pt-4 md:pb-14 lg:px-10 lg:pt-4 lg:pb-16">
+
     <div class="overflow-hidden">
       <div
         class="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
         data-slider-track
       >
-        {slides.map((slide, index) => (
+        {slides.map((slide, i) => (
           <article class="min-w-full">
             <div class="grid items-center gap-8 lg:grid-cols-[1.02fr_.98fr] lg:gap-12">
-              <!-- Imagen primero en móvil -->
+
+              {/* ── Imagen ── */}
               <div class="group order-1 relative flex justify-center lg:order-2 lg:justify-end">
                 <div class="relative w-full max-w-152">
-                  <div class="absolute inset-x-[7%] top-[8%] -z-20 h-[80%] rounded-full bg-[radial-gradient(circle,rgba(77,180,191,0.22)_0%,rgba(77,180,191,0.08)_44%,transparent_74%)] blur-[46px]"></div>
-                  <div class="absolute inset-x-[14%] bottom-[5%] -z-10 h-[16%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(26,24,24,0.24)_0%,rgba(26,24,24,0.10)_52%,transparent_80%)] blur-2xl"></div>
+                  {/* Halos */}
+                  <div class="pointer-events-none absolute inset-x-[7%] top-[8%] -z-20 h-[80%] rounded-full bg-[radial-gradient(circle,rgba(77,180,191,0.22)_0%,rgba(77,180,191,0.08)_44%,transparent_74%)] blur-[46px]" aria-hidden="true"></div>
+                  <div class="pointer-events-none absolute inset-x-[14%] bottom-[5%] -z-10 h-[16%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(26,24,24,0.24)_0%,rgba(26,24,24,0.10)_52%,transparent_80%)] blur-2xl" aria-hidden="true"></div>
 
                   {typeof slide.image === "string" ? (
                     <img
                       src={slide.image}
                       alt={slide.alt}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchpriority={index === 0 ? "high" : "auto"}
-                      class="relative z-10 h-auto w-full object-contain mask-fade-bottom transition duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01] filter-[drop-shadow(0_18px_30px_rgba(18,16,16,0.18))_drop-shadow(0_42px_72px_rgba(18,16,16,0.14))]"
+                      width="608"
+                      height="912"
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchpriority={i === 0 ? "high" : "auto"}
+                      decoding={i === 0 ? "sync" : "async"}
+                      class={`${IMG_CLS} ${i === 0 ? "hero-zoom-in" : ""}`}
                     />
                   ) : (
                     <Picture
@@ -80,25 +75,20 @@ const hasMultipleSlides = slides.length > 1;
                       alt={slide.alt}
                       formats={["avif", "webp"]}
                       fallbackFormat="webp"
-                      quality="mid"
-                      priority={index === 0}
-                      widths={[420, 560, 760, 960, 1200]}
-                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 608px"
-                      class="relative z-10 h-auto w-full object-contain mask-fade-bottom transition duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01] filter-[drop-shadow(0_18px_30px_rgba(18,16,16,0.18))_drop-shadow(0_42px_72px_rgba(18,16,16,0.14))]"
+                      quality={i === 0 ? "high" : "mid"}
+                      priority={i === 0}
+                      sizes={IMG_SIZES}
+                      class={`${IMG_CLS} ${i === 0 ? "hero-zoom-in" : ""}`}
                     />
                   )}
 
                   {slide.floatingCard && (
                     <div class="absolute bottom-4 left-1/2 z-20 hidden w-fit -translate-x-1/2 rounded-2xl border border-white/80 bg-white/88 px-4 py-3 shadow-[0_14px_35px_rgba(0,0,0,0.10)] backdrop-blur-md md:flex lg:left-6 lg:translate-x-0">
                       <div class="flex items-center gap-3">
-                        <span class="h-2.5 w-2.5 rounded-full bg-[#4db4bf]"></span>
+                        <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-[#4db4bf]" aria-hidden="true"></span>
                         <div>
-                          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6161]">
-                            {slide.floatingCard.label}
-                          </p>
-                          <p class="text-sm font-medium text-[#2b2020]">
-                            {slide.floatingCard.text}
-                          </p>
+                          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6161]">{slide.floatingCard.label}</p>
+                          <p class="text-sm font-medium text-[#2b2020]">{slide.floatingCard.text}</p>
                         </div>
                       </div>
                     </div>
@@ -106,49 +96,40 @@ const hasMultipleSlides = slides.length > 1;
                 </div>
               </div>
 
-              <!-- Texto -->
-              <div class="order-2 max-w-2xl lg:order-1">
+              {/* ── Texto ── */}
+              <div class="order-2 max-w-2xl pt-4 lg:order-1 lg:pt-10">
                 <h1 class="max-w-xl text-[2.35rem] font-light leading-[0.98] tracking-[-0.04em] text-[#1f2024] md:text-5xl lg:text-[4.1rem]">
                   {slide.title}
-                  <span class="block font-medium text-[#241717]">
-                    {slide.titleHighlight}
-                  </span>
+                  <span class="block font-medium text-[#241717]">{slide.titleHighlight}</span>
                 </h1>
 
                 <p class="mt-5 max-w-xl text-[1.02rem] leading-relaxed text-[#5c5f66] md:text-[1.14rem] lg:text-[1.2rem]">
                   {slide.description}
                 </p>
 
-                <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-                  {slide.primaryCta && (
-                    <a
-                      href={slide.primaryCta.href}
-                      class="inline-flex w-fit items-center justify-center rounded-full bg-[#241717] px-7 py-3.5 text-base font-semibold text-white shadow-[0_12px_28px_rgba(36,23,23,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#352525]"
-                    >
-                      {slide.primaryCta.label}
-                    </a>
-                  )}
-
-                  {slide.secondaryCta && (
-                    <a
-                      href={slide.secondaryCta.href}
-                      class="inline-flex w-fit items-center justify-center rounded-full border border-[#dddede] bg-white/92 px-7 py-3.5 text-base font-medium text-[#2f3035] transition duration-300 hover:-translate-y-0.5 hover:bg-[#faf9f9]"
-                    >
-                      {slide.secondaryCta.label}
-                    </a>
-                  )}
-                </div>
+                {(slide.primaryCta || slide.secondaryCta) && (
+                  <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+                    {slide.primaryCta && (
+                      <a href={slide.primaryCta.href}
+                         class="inline-flex w-fit items-center justify-center rounded-full bg-[#241717] px-7 py-3.5 text-base font-semibold text-white shadow-[0_12px_28px_rgba(36,23,23,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#352525]">
+                        {slide.primaryCta.label}
+                      </a>
+                    )}
+                    {slide.secondaryCta && (
+                      <a href={slide.secondaryCta.href}
+                         class="inline-flex w-fit items-center justify-center rounded-full border border-[#dddede] bg-white/92 px-7 py-3.5 text-base font-medium text-[#2f3035] transition duration-300 hover:-translate-y-0.5 hover:bg-[#faf9f9]">
+                        {slide.secondaryCta.label}
+                      </a>
+                    )}
+                  </div>
+                )}
 
                 {slide.cards && slide.cards.length > 0 && (
                   <div class="mt-8 grid gap-3 sm:grid-cols-3">
                     {slide.cards.map((card) => (
                       <div class="rounded-2xl border border-white/80 bg-white/80 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.05)] backdrop-blur-sm">
-                        <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a7a7a]">
-                          {card.label}
-                        </p>
-                        <p class="mt-2 text-sm leading-relaxed text-[#403636]">
-                          {card.text}
-                        </p>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8a7a7a]">{card.label}</p>
+                        <p class="mt-2 text-sm leading-relaxed text-[#403636]">{card.text}</p>
                       </div>
                     ))}
                   </div>
@@ -157,15 +138,14 @@ const hasMultipleSlides = slides.length > 1;
                 {slide.tags && slide.tags.length > 0 && (
                   <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium text-[#605a5a] md:text-[15px]">
                     {slide.tags.map((tag, tagIndex) => (
-                      <Fragment>
-                        {tagIndex > 0 && (
-                          <span class="h-1.5 w-1.5 rounded-full bg-[#d7c2c2]"></span>
-                        )}
+                      <>
+                        {tagIndex > 0 && <span class="h-1.5 w-1.5 rounded-full bg-[#d7c2c2]" aria-hidden="true"></span>}
                         <span>{tag}</span>
-                      </Fragment>
+                      </>
                     ))}
                   </div>
                 )}
+
               </div>
             </div>
           </article>
@@ -173,121 +153,134 @@ const hasMultipleSlides = slides.length > 1;
       </div>
     </div>
 
-    {hasMultipleSlides && (
-      <div class="mt-8 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          aria-label="Slide anterior"
-          data-slider-prev
-          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e5dede] bg-white/90 text-[#2f3035] shadow-[0_8px_22px_rgba(0,0,0,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+    {/* ── Navegación (fuera del loop, única instancia) ── */}
+    {multi && (
+      <div class="mt-10 flex items-center gap-3 px-1">
+
+        <button type="button" aria-label="Slide anterior" data-slider-prev class={BTN_NAV}>
+          <span class="absolute inset-0 rounded-full bg-[#241717] opacity-0 transition duration-300 group-hover:opacity-100" aria-hidden="true"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4 text-[#3a2e2e] transition duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/>
           </svg>
         </button>
 
-        <div class="flex items-center gap-2">
-          {slides.map((_, index) => (
+        <div class="flex items-center gap-1.5" role="tablist">
+          {slides.map((_, dotIndex) => (
             <button
               type="button"
-              aria-label={`Ir al slide ${index + 1}`}
-              aria-current={index === 0 ? "true" : "false"}
+              role="tab"
+              aria-label={`Slide ${dotIndex + 1}`}
+              aria-selected={dotIndex === 0 ? "true" : "false"}
               data-slider-dot
-              class:list={[
-                "h-2.5 rounded-full transition-all duration-300",
-                index === 0 ? "w-7 bg-[#241717]" : "w-2.5 bg-[#d8cccc]",
-              ]}
-            ></button>
+              class={`rounded-full transition-all duration-300 ${
+                dotIndex === 0
+                  ? "h-2 w-6 bg-[#241717]"
+                  : "h-2 w-2 bg-[#ddd0d0] hover:bg-[#c0b0b0]"
+              }`}
+            />
           ))}
         </div>
 
-        <button
-          type="button"
-          aria-label="Siguiente slide"
-          data-slider-next
-          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#e5dede] bg-white/90 text-[#2f3035] shadow-[0_8px_22px_rgba(0,0,0,0.06)] transition duration-300 hover:-translate-y-0.5 hover:bg-white"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6" />
+        <button type="button" aria-label="Siguiente slide" data-slider-next class={BTN_NAV}>
+          <span class="absolute inset-0 rounded-full bg-[#241717] opacity-0 transition duration-300 group-hover:opacity-100" aria-hidden="true"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="relative z-10 h-4 w-4 text-[#3a2e2e] transition duration-300 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/>
           </svg>
         </button>
+
+        <div class="ml-1 flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] text-[#9a8a8a]" aria-live="polite">
+          <span class="h-3.5 w-px bg-[#e2d5d5]" aria-hidden="true"></span>
+          <span data-slider-counter>01</span>
+          <span class="opacity-35" aria-hidden="true">/</span>
+          <span>{String(slides.length).padStart(2, "0")}</span>
+        </div>
+
       </div>
     )}
+
   </div>
 </section>
 
 <script>
-  const sliders = document.querySelectorAll<HTMLElement>("[data-hero-slider]");
-
-  sliders.forEach((root) => {
-    const track = root.querySelector<HTMLElement>("[data-slider-track]");
+  document.querySelectorAll("[data-hero-slider]").forEach((root) => {
+    const track = root.querySelector("[data-slider-track]") as HTMLElement | null;
     if (!track) return;
 
-    const slideElements = Array.from(track.children);
-    if (slideElements.length <= 1) return;
+    const total = track.children.length;
+    if (total <= 1) return;
 
-    const prevBtn = root.querySelector<HTMLButtonElement>("[data-slider-prev]");
-    const nextBtn = root.querySelector<HTMLButtonElement>("[data-slider-next]");
-    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-slider-dot]"));
+    const dots     = [...root.querySelectorAll("[data-slider-dot]")] as HTMLElement[];
+    const counters = [...root.querySelectorAll("[data-slider-counter]")] as HTMLElement[];
+    const rmo      = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ap       = (root as HTMLElement).dataset.autoplay === "true";
+    const ms       = Number((root as HTMLElement).dataset.interval ?? 6000);
 
-    const autoplayEnabled = root.dataset.autoplay === "true";
-    const intervalValue = Number(root.dataset.interval ?? "6000");
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    let cur = 0;
+    let tid: ReturnType<typeof setInterval> | null = null;
 
-    let current = 0;
-    let timer: ReturnType<typeof setInterval> | null = null;
+    function go(n: number) {
+      cur = ((n % total) + total) % total;
 
-    const update = () => {
-      track.style.transform = `translate3d(-${current * 100}%, 0, 0)`;
+      track!.style.transform = `translate3d(-${cur * 100}%,0,0)`;
 
-      dots.forEach((dot, index) => {
-        const isActive = index === current;
-        dot.setAttribute("aria-current", isActive ? "true" : "false");
-        dot.classList.toggle("w-7", isActive);
-        dot.classList.toggle("bg-[#241717]", isActive);
-        dot.classList.toggle("w-2.5", !isActive);
-        dot.classList.toggle("bg-[#d8cccc]", !isActive);
+      dots.forEach((d, i) => {
+        const on = i === cur;
+        d.setAttribute("aria-selected", on ? "true" : "false");
+        if (on) {
+          d.classList.add("w-6", "bg-[#241717]");
+          d.classList.remove("w-2", "bg-[#ddd0d0]");
+        } else {
+          d.classList.add("w-2", "bg-[#ddd0d0]");
+          d.classList.remove("w-6", "bg-[#241717]");
+        }
       });
+
+      const label = String(cur + 1).padStart(2, "0");
+      counters.forEach((el) => (el.textContent = label));
+    }
+
+    const stop  = () => { if (tid !== null) { clearInterval(tid); tid = null; } };
+    const start = () => {
+      if (!ap || rmo) return;
+      stop();
+      tid = setInterval(() => go(cur + 1), ms);
     };
 
-    const goTo = (index: number) => {
-      current = (index + slideElements.length) % slideElements.length;
-      update();
-    };
+    root.querySelector("[data-slider-prev]")?.addEventListener("click", () => { go(cur - 1); start(); });
+    root.querySelector("[data-slider-next]")?.addEventListener("click", () => { go(cur + 1); start(); });
+    dots.forEach((d, i) => d.addEventListener("click", () => { go(i); start(); }));
 
-    const stopAutoplay = () => {
-      if (timer !== null) {
-        clearInterval(timer);
-        timer = null;
-      }
-    };
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin",    stop);
+    root.addEventListener("focusout",   start);
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
 
-    const startAutoplay = () => {
-      if (!autoplayEnabled || prefersReducedMotion) return;
-      stopAutoplay();
-      timer = setInterval(() => goTo(current + 1), intervalValue);
-    };
+    new IntersectionObserver(
+      ([e]) => (e?.isIntersecting ? start() : stop()),
+      { threshold: 0.2 }
+    ).observe(root);
 
-    prevBtn?.addEventListener("click", () => { goTo(current - 1); startAutoplay(); });
-    nextBtn?.addEventListener("click", () => { goTo(current + 1); startAutoplay(); });
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => { goTo(index); startAutoplay(); });
-    });
-
-    root.addEventListener("mouseenter", stopAutoplay);
-    root.addEventListener("mouseleave", startAutoplay);
-    root.addEventListener("focusin", stopAutoplay);
-    root.addEventListener("focusout", startAutoplay);
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stopAutoplay();
-      else startAutoplay();
-    });
-
-    update();
-    startAutoplay();
+    go(0);
+    start();
   });
 </script>
+
+<style>
+  .drop-shadow-hero {
+    filter:
+      drop-shadow(0 18px 30px rgba(18,16,16,0.18))
+      drop-shadow(0 42px 72px rgba(18,16,16,0.14));
+  }
+
+  @keyframes heroZoomIn {
+    from { transform: scale(1.18); }
+    to   { transform: scale(1);    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-zoom-in {
+      animation: heroZoomIn 2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+  }
+</style>

@@ -1,54 +1,36 @@
 ---
 import logoDesktop from "../../assets/Logotipo.svg?url";
-import logoMobile from "../../assets/logo_tioM.svg?url";
 ---
 
-<header class="relative z-[120] mx-auto max-w-7xl px-4 pt-4 sm:px-6 sm:pt-5 lg:px-[3.75rem] lg:py-10">
-
-  <div class="flex min-h-[4.5rem] items-center justify-between gap-4 md:min-h-[5.25rem] lg:min-h-[6.875rem]">
-
+<header class="relative z-120 mx-auto max-w-7xl px-4 pt-3 sm:px-6 sm:pt-4 lg:px-15 lg:pt-6 lg:pb-8">
+  <div class="flex min-h-[5.35rem] items-center justify-between gap-3 md:min-h-[5.9rem] lg:min-h-[7.35rem]">
     <!-- Logo -->
     <a href="/" class="flex shrink-0 flex-col items-start">
-      <!-- Logo móvil -->
       <img
-        src={logoMobile}
+        src={logoDesktop}
         alt="MaxiloDental Studio"
-        width="300"
-        height="160"
-        class="block h-16 w-auto sm:h-20 lg:hidden"
+        width="420"
+        height="420"
+        class="block h-[5.4rem] w-auto sm:h-24 md:h-[6.3rem] lg:h-30"
         loading="eager"
         decoding="async"
+        fetchpriority="high"
       />
-      <!--
-        MEJORA A: tagline debajo del logo móvil.
-        Da contexto de ubicación y llena el espacio vacío del header
-        sin agregar peso visual.
-      -->
-      <!-- Tagline mejorado: dot animado + separador fino + texto -->
-      <span class="mt-1 flex items-center gap-1.5 lg:hidden">
+
+      <!-- Tagline móvil -->
+      <span class="mt-1.5 flex items-center gap-1.5 lg:hidden">
         <span class="relative flex h-1.5 w-1.5">
           <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2AA7B0] opacity-60"></span>
           <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#2AA7B0]"></span>
         </span>
-        <span class="text-[10px] font-semibold uppercase tracking-widest text-[#8f7f7f]">
+        <span class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#8f7f7f] sm:text-[11px]">
           Fusagasugá · Cundinamarca
         </span>
       </span>
-
-      <!-- Logo desktop -->
-      <img
-        src={logoDesktop}
-        alt="MaxiloDental Studio"
-        width="300"
-        height="160"
-        class="hidden h-[7.5rem] w-auto lg:block"
-        loading="eager"
-        decoding="async"
-      />
     </a>
 
     <!-- Menú escritorio -->
-    <nav class="hidden items-center gap-10 font-semibold text-[#111] lg:flex lg:text-lg">
+    <nav class="hidden items-center gap-8 font-semibold text-[#111] lg:flex lg:text-lg xl:gap-10">
       <a
         href="/"
         class="inline-flex h-10 items-center underline-offset-4 transition hover:text-[#2AA7B0] hover:underline"
@@ -81,21 +63,15 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
       </a>
     </nav>
 
-    <!-- Lado derecho móvil: CTA + hamburger -->
-    <div class="flex items-center gap-2 lg:hidden">
-
-      <!--
-        MEJORA B: botón CTA compacto junto al hamburger.
-        Ocupa el espacio muerto entre el logo y el menú,
-        y convierte el header en una zona de conversión directa.
-      -->
+    <!-- Lado derecho móvil -->
+    <div class="flex items-center gap-1.5 lg:hidden sm:gap-2">
       <a
         href="https://wa.link/u29whe"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 rounded-full bg-[#2AA7B0] px-3.5 py-2
-               text-[12px] font-bold text-white shadow-[0_6px_16px_rgba(42,167,176,0.28)]
-               transition duration-300 hover:brightness-110 active:scale-95"
+        class="inline-flex items-center gap-1.5 rounded-full bg-[#2AA7B0] px-3 py-2
+               text-[11px] font-bold text-white shadow-[0_6px_16px_rgba(42,167,176,0.28)]
+               transition duration-300 hover:brightness-110 active:scale-95 sm:px-3.5 sm:text-[12px]"
       >
         Cita
         <svg
@@ -111,15 +87,15 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
         </svg>
       </a>
 
-      <!-- Menú móvil hamburger -->
+      <!-- Menú móvil -->
       <details id="mobile-menu" class="group">
         <summary
-          class="relative z-[220] flex h-12 w-12 cursor-pointer list-none items-center justify-center rounded-full border border-black/8 bg-white text-[#111] shadow-sm marker:content-none"
+          class="relative z-220 flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-black/8 bg-white text-[#111] shadow-sm marker:content-none transition duration-300 hover:border-[#2AA7B0]/30 hover:text-[#2AA7B0] sm:h-12 sm:w-12"
           aria-label="Abrir menú de navegación"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 transition duration-300 group-open:rotate-90"
+            class="h-5 w-5 transition duration-300 group-open:rotate-90 group-open:scale-95"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -131,38 +107,100 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
         </summary>
 
         <!-- Fondo -->
-        <div class="fixed inset-0 z-[200] bg-black/20 backdrop-blur-[2px]"></div>
+        <div class="fixed inset-0 z-200 bg-[linear-gradient(180deg,rgba(15,15,15,0.28),rgba(15,15,15,0.18))] backdrop-blur-[6px]"></div>
 
         <!-- Panel -->
-        <div class="fixed left-4 right-4 top-24 z-[210] overflow-hidden rounded-3xl border border-black/5 bg-white p-3 shadow-[0_18px_50px_rgba(0,0,0,0.14)]">
-          <nav class="flex flex-col gap-1 font-semibold text-[#111]">
-            <a href="/" class="rounded-[18px] px-4 py-3 transition hover:bg-[#f7f4f2] hover:text-[#2AA7B0]">
-              Inicio
-            </a>
-            <a href="/#nosotros-equipo" class="rounded-[18px] px-4 py-3 transition hover:bg-[#f7f4f2] hover:text-[#2AA7B0]">
-              Nosotros
-            </a>
-            <a href="/servicios" class="rounded-[18px] px-4 py-3 transition hover:bg-[#f7f4f2] hover:text-[#2AA7B0]">
-              Servicios
-            </a>
-            <a href="/pacientes" class="rounded-[18px] px-4 py-3 transition hover:bg-[#f7f4f2] hover:text-[#2AA7B0]">
-              Pacientes
-            </a>
-            <div class="my-1 h-px bg-[#efe6e2]"></div>
+        <div
+          class="fixed inset-x-4 top-[5.8rem] z-210 overflow-hidden rounded-4xl
+                 border border-white/70 bg-white/92 p-3 shadow-[0_28px_70px_rgba(0,0,0,0.16)]
+                 ring-1 ring-black/5 backdrop-blur-xl
+                 transition duration-300 ease-out
+                 group-open:translate-y-0 group-open:opacity-100"
+        >
+          <!-- Encabezado elegante -->
+          <div class="mb-3 rounded-[1.4rem] bg-[linear-gradient(135deg,rgba(42,167,176,0.10),rgba(255,255,255,0.72),rgba(42,167,176,0.06))] px-4 py-4 ring-1 ring-[#2AA7B0]/10">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+               
+                <p class="mt-1 text-base font-bold text-[#171717]">
+                  MaxiloDental Studio
+                </p>
+              </div>
+
+      
+            </div>
+          </div>
+
+          <nav class="flex flex-col gap-1.5 font-semibold text-[#111]">
             <a
-              href="/contacto"
-              class="mt-1 inline-flex items-center justify-center rounded-full bg-[#2AA7B0] px-5 py-3 text-white transition hover:brightness-110"
+              href="/"
+              class="flex items-center justify-between rounded-[18px] px-4 py-3.5 transition hover:bg-[#f7fbfb] hover:text-[#2AA7B0]"
             >
-              Contacto
+              <span>Inicio</span>
+              <span aria-hidden="true" class="text-[#2AA7B0]">→</span>
             </a>
+
+            <a
+              href="/#nosotros-equipo"
+              class="flex items-center justify-between rounded-[18px] px-4 py-3.5 transition hover:bg-[#f7fbfb] hover:text-[#2AA7B0]"
+            >
+              <span>Nosotros</span>
+              <span aria-hidden="true" class="text-[#2AA7B0]">→</span>
+            </a>
+
+            <a
+              href="/servicios"
+              class="flex items-center justify-between rounded-[18px] px-4 py-3.5 transition hover:bg-[#f7fbfb] hover:text-[#2AA7B0]"
+            >
+              <span>Servicios</span>
+              <span aria-hidden="true" class="text-[#2AA7B0]">→</span>
+            </a>
+
+            <a
+              href="/pacientes"
+              class="flex items-center justify-between rounded-[18px] px-4 py-3.5 transition hover:bg-[#f7fbfb] hover:text-[#2AA7B0]"
+            >
+              <span>Pacientes</span>
+              <span aria-hidden="true" class="text-[#2AA7B0]">→</span>
+            </a>
+
+            <div class="my-2 h-px bg-[linear-gradient(90deg,transparent,#ebe6e3,transparent)]"></div>
+
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <a
+                href="/contacto"
+                class="inline-flex items-center justify-center rounded-full bg-[#171717] px-5 py-3 text-sm font-bold text-white transition hover:brightness-110"
+              >
+                Contacto
+              </a>
+
+              <a
+                href="https://wa.link/u29whe"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 rounded-full bg-[#2AA7B0] px-5 py-3 text-sm font-bold text-white transition hover:brightness-110"
+              >
+                WhatsApp
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  aria-hidden="true"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
+                </svg>
+              </a>
+            </div>
           </nav>
         </div>
       </details>
     </div>
-
   </div>
 
-  <!-- CTA ancho completo — inspirado en la referencia, adaptado al estilo premium -->
+  <!-- CTA ancho completo -->
   <a
     href="https://wa.link/u29whe"
     target="_blank"
@@ -181,18 +219,12 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
 
   <!-- barra móvil inferior -->
   <div class="mt-2 lg:hidden">
-    <!--
-      MEJORA C: ring visible al contenedor + ícono SVG real de WhatsApp
-      en el botón verde para que se reconozca de inmediato.
-    -->
     <div class="flex items-center gap-2 overflow-x-auto rounded-full
                 border border-white/80 bg-white/82 p-2
                 shadow-[0_10px_24px_rgba(20,20,20,0.06)]
                 ring-1 ring-black/6
                 backdrop-blur
                 [&::-webkit-scrollbar]:hidden">
-
-      <!-- Contacto → #section4 (sección de contacto en la home) -->
       <a
         href="#section4"
         class="inline-flex shrink-0 items-center justify-center rounded-full bg-[#171717] px-4 py-2.5 text-[13px] font-semibold text-white"
@@ -200,7 +232,6 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
         Contacto
       </a>
 
-      <!-- Ubicación → página /contacto -->
       <a
         href="/contacto"
         class="inline-flex shrink-0 items-center gap-1.5 justify-center rounded-full border border-[#e7dcd7] bg-[#fcfbfb] px-4 py-2.5 text-[13px] font-semibold text-[#171717]"
@@ -212,7 +243,6 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
         Ubicación
       </a>
 
-      <!-- Servicios — reemplaza WhatsApp duplicado -->
       <a
         href="/servicios"
         class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full
@@ -229,8 +259,8 @@ import logoMobile from "../../assets/logo_tioM.svg?url";
 </header>
 
 <script>
-  const menu = document.getElementById("mobile-menu") as HTMLDetailsElement | null;
-  if (menu) {
+  const menu = document.getElementById("mobile-menu");
+  if (menu instanceof HTMLDetailsElement) {
     menu.querySelectorAll("nav a").forEach((link) => {
       link.addEventListener("click", () => {
         menu.removeAttribute("open");

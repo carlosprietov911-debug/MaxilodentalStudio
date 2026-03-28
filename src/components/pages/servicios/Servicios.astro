@@ -9,7 +9,8 @@ import servicio1 from "../../../assets/protesishibridas.svg";
 import servicio2 from "../../../assets/sedacion.svg";
 import servicio3 from "../../../assets/implantedental.svg";
 import servicio4 from "../../../assets/ortoganitca.png";
-import servicio5 from "../../../assets/diseñosonrisa.jpg"; 
+import servicio5 from "../../../assets/diseñosonrisa.svg"; 
+import servicio6 from "../../../assets/rehabilitacion.svg"; 
 // ──────────────────────────────────────────────────────────────────────────
 
 const WHATSAPP_URL = "https://wa.link/u29whe";
@@ -98,16 +99,17 @@ const servicios: Servicio[] = [
   etiqueta: "Estética dental",
 },
 
-  // ── Sexta celda: "Próximamente" (puedes borrarla si no la necesitas) ────
-  {
-    titulo: "",
-    descripcion: "",
-    imagen: null,
-    alt: "",
-    href: "",
-    activo: false,
-    etiqueta: "",
-  },
+  // ── Sexta celda:────
+ {
+  titulo: "Rehabilitación digital",
+  descripcion:
+    "La rehabilitación digital en odontología utiliza tecnología avanzada (escáneres intraorales, software CAD/CAM e impresión 3D) para planificar y ejecutar tratamientos con mayor precisión, eficiencia y resultados predecibles.",
+  imagen: servicio6,
+  alt: "Rehabilitación digital en odontología con tecnología CAD/CAM",
+  href: "/tratamientos/rehabilitacion-digital",
+  activo: true,
+  etiqueta: "",
+}
 ];
 ---
 
@@ -266,55 +268,91 @@ const servicios: Servicio[] = [
   </div>
 </section>
 
-<section class="px-6 py-10 lg:px-10 lg:py-12">
-  <div class="mx-auto max-w-7xl border-y border-[#eee5e5] py-8 md:py-10">
-    <div class="mx-auto max-w-5xl text-center">
-      <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#8f7f7f]">
+<section class="px-6 py-14 lg:px-10 lg:py-20">
+  <div class="mx-auto max-w-7xl border-y border-[#e6dddd] py-14">
+    
+    <div class="mx-auto max-w-4xl text-center">
+      <p class="text-[10.5px] font-medium uppercase tracking-[0.32em] text-[#9a8c8c]">
         Nuestro enfoque
       </p>
 
-      <h2 class="mt-3 text-[1.95rem] font-light leading-[1.05] tracking-tight text-[#241717] md:text-[2.45rem]">
+      <h2 class="mt-4 text-[2.1rem] font-light leading-[1.04] tracking-[-0.01em] text-[#221616] md:text-[2.8rem]">
         Antes de intervenir una sonrisa,
-        <span class="font-medium">nos detenemos a entenderla</span>
+        <span class="font-medium text-[#2e2323]">
+          nos detenemos a entenderla
+        </span>
       </h2>
 
-      <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-relaxed text-[#5f5656] md:text-base">
-        Observamos proporciones, escuchamos expectativas y analizamos cada caso con
-        calma para que el tratamiento tenga sentido, coherencia y belleza real.
+      <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-[#6b5f5f] md:text-base">
+        Observamos proporciones, escuchamos expectativas y analizamos cada caso con calma,
+        para que cada decisión tenga sentido, coherencia y una estética verdaderamente natural.
       </p>
+    </div>
 
-      <!--
-        MOBILE: agregado `text-left` en móvil a cada card para lectura más natural;
-        en md se mantiene el centrado implícito del contenedor padre
-      -->
-      <div class="mt-7 grid gap-4 md:grid-cols-3">
-        <div class="rounded-[1.1rem] border border-[#eee5e5] px-5 py-4 text-left md:text-center">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8b7b7b]">
+    <!-- GRID -->
+    <div class="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-3">
+      
+      <!-- CARD -->
+      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+        
+        <!-- glow -->
+        <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(77,180,191,0.12),transparent_60%)]"></div>
+
+        <div class="relative z-10">
+          <span class="block text-[10px] tracking-[0.28em] text-[#a08f8f] mb-3">
+            01
+          </span>
+
+          <h3 class="text-[1rem] font-medium text-[#2a1f1f]">
             Escucha
-          </p>
-          <p class="mt-2 text-sm leading-relaxed text-[#564b4b]">
+          </h3>
+
+          <p class="mt-2 text-[14px] leading-relaxed text-[#5e5252]">
             Entendemos lo que buscas y lo que realmente necesita tu sonrisa.
           </p>
         </div>
+      </div>
 
-        <div class="rounded-[1.1rem] border border-[#eee5e5] px-5 py-4 text-left md:text-center">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8b7b7b]">
+      <!-- CARD -->
+      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+        
+        <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(243,217,212,0.18),transparent_60%)]"></div>
+
+        <div class="relative z-10">
+          <span class="block text-[10px] tracking-[0.28em] text-[#a08f8f] mb-3">
+            02
+          </span>
+
+          <h3 class="text-[1rem] font-medium text-[#2a1f1f]">
             Criterio
-          </p>
-          <p class="mt-2 text-sm leading-relaxed text-[#564b4b]">
+          </h3>
+
+          <p class="mt-2 text-[14px] leading-relaxed text-[#5e5252]">
             Evaluamos función, estética y proporciones antes de decidir cualquier paso.
           </p>
         </div>
+      </div>
 
-        <div class="rounded-[1.1rem] border border-[#eee5e5] px-5 py-4 text-left md:text-center">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8b7b7b]">
+      <!-- CARD -->
+      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+        
+        <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(77,180,191,0.12),transparent_60%)]"></div>
+
+        <div class="relative z-10">
+          <span class="block text-[10px] tracking-[0.28em] text-[#a08f8f] mb-3">
+            03
+          </span>
+
+          <h3 class="text-[1rem] font-medium text-[#2a1f1f]">
             Dirección
-          </p>
-          <p class="mt-2 text-sm leading-relaxed text-[#564b4b]">
+          </h3>
+
+          <p class="mt-2 text-[14px] leading-relaxed text-[#5e5252]">
             Trazamos un camino claro para lograr un resultado natural y bien pensado.
           </p>
         </div>
       </div>
+
     </div>
   </div>
 </section>

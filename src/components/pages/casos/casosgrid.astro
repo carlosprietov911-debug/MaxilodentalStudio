@@ -46,7 +46,10 @@ const getImageUrl = async (id: number | null): Promise<string | null> => {
 // 🔹 Fetch principal con validación
 const res = await fetch(
   "https://cms.maxilodentalstudio.com/wp-json/wp/v2/casos",
-  { headers }
+  { headers,
+    cache: "no-store"
+   }
+
 );
 
 if (!res.ok) {

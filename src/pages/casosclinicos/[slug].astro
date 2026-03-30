@@ -42,7 +42,9 @@ export async function getStaticPaths() {
     try {
       const res = await fetch(
         `https://cms.maxilodentalstudio.com/wp-json/wp/v2/media/${id}`,
-        { headers }
+        { headers,
+          cache: "no-store"
+         }
       );
       if (!res.ok) return null;
       const data = await res.json();
@@ -54,7 +56,9 @@ export async function getStaticPaths() {
 
   const res = await fetch(
     "https://cms.maxilodentalstudio.com/wp-json/wp/v2/casos",
-    { headers }
+    { headers,
+      cache: "no-store"
+    }
   );
   const casosRaw: CasoRaw[] = await res.json();
 

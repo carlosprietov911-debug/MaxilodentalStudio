@@ -1,7 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
 export const prerender = false;
-export const revalidate = 60; // se regenera cada 60 segundos
+export const revalidate = 60;
 
 interface CasoRaw {
   slug: string;
@@ -33,63 +34,75 @@ interface Caso {
   imagenDespues: string | null;
 }
 
-export async function getStaticPaths() {
-  const credentials = btoa(`${import.meta.env.WP_USER}:${import.meta.env.WP_PASSWORD}`);
-  const headers = { Authorization: `Basic ${credentials}` };
+const { slug } = Astro.params;
 
-  const getImageUrl = async (id: number | null): Promise<string | null> => {
-    if (!id) return null;
-    try {
-      const res = await fetch(
-        `https://cms.maxilodentalstudio.com/wp-json/wp/v2/media/${id}`,
-        { headers,
-          cache: "no-store"
-         }
-      );
-      if (!res.ok) return null;
-      const data = await res.json();
-      return data.source_url ?? null;
-    } catch {
+const credentials = btoa(`${import.meta.env.WP_USER}:${import.meta.env.WP_PASSWORD}`);
+const headers = { Authorization: `Basic ${credentials}` };
+
+// 🔥 FUNCIÓN CORREGIDA Y ESTABLE
+const getImageUrl = async (id: number | null): Promise<string | null> => {
+  if (!id) return null;
+
+  try {
+    const res = await fetch(
+      `https://cms.maxilodentalstudio.com/wp-json/wp/v2/media/${id}`,
+      {
+        // 🔥 NO AUTH aquí (clave)
+        cache: "force-cache"
+      }
+    );
+
+    if (!res.ok) {
+      console.log("Error media:", id);
       return null;
     }
-  };
 
-  const res = await fetch(
-    "https://cms.maxilodentalstudio.com/wp-json/wp/v2/casos",
-    { headers,
-      cache: "no-store"
-    }
-  );
-  const casosRaw: CasoRaw[] = await res.json();
+    const data = await res.json();
+    return data?.source_url ?? null;
 
-  const paths = await Promise.all(
-    casosRaw.map(async (caso) => ({
-      params: { slug: caso.slug },
-      props: {
-        caso: {
-          slug: caso.slug,
-          title: caso.title,
-          descripcion: caso.acf?.descripcion ?? "",
-          categoria: caso.acf?.categoria,
-          tiempo: caso.acf?.tiempo_tratamiento,
-          paciente: caso.acf?.paciente,
-          video: caso.acf?.video_proceso,
-          problema: caso.acf?.problema,
-          tratamiento: caso.acf?.tratamiento,
-          imagenAntes: await getImageUrl(caso.acf?.imagen_antes ?? null),
-          imagenDespues: await getImageUrl(caso.acf?.imagen_despues ?? null),
-        } satisfies Caso,
-      },
-    }))
-  );
+  } catch (err) {
+    console.log("Fetch media falló:", id);
+    return null;
+  }
+};
 
-  return paths;
+// 🔹 FETCH DEL CASO
+const res = await fetch(
+  `https://cms.maxilodentalstudio.com/wp-json/wp/v2/casos?slug=${slug}`,
+  { headers, cache: "no-store" }
+);
+
+const data: CasoRaw[] = await res.json();
+const raw = data[0];
+
+// 🔴 PROTECCIÓN
+if (!raw) {
+  return Astro.redirect("/404");
 }
 
-interface Props { caso: Caso; }
-const { caso } = Astro.props;
+// 🔥 FETCH IMÁGENES EN PARALELO (mejor rendimiento)
+const [imagenAntes, imagenDespues] = await Promise.all([
+  getImageUrl(raw.acf?.imagen_antes ?? null),
+  getImageUrl(raw.acf?.imagen_despues ?? null),
+]);
 
-const url = caso.video || "";
+// 🔹 OBJETO FINAL
+const caso: Caso = {
+  slug: raw.slug,
+  title: raw.title,
+  descripcion: raw.acf?.descripcion ?? "",
+  categoria: raw.acf?.categoria,
+  tiempo: raw.acf?.tiempo_tratamiento,
+  paciente: raw.acf?.paciente,
+  video: raw.acf?.video_proceso,
+  problema: raw.acf?.problema,
+  tratamiento: raw.acf?.tratamiento,
+  imagenAntes,
+  imagenDespues,
+};
+
+// 🔹 VIDEO
+const url = caso.video ?? "";
 const isYouTube = url.includes("youtube") || url.includes("youtu.be");
 const isInstagram = url.includes("instagram.com");
 
@@ -97,10 +110,10 @@ const getYouTubeEmbed = (u: string) => {
   const m = u.match(/(?:v=|youtu\.be\/)([^&]+)/);
   return m ? `https://www.youtube.com/embed/${m[1]}` : null;
 };
+
 const getInstagramEmbed = (u: string) =>
   u.endsWith("/") ? `${u}embed` : `${u}/embed`;
 ---
-
 <Layout>
 
 <style>

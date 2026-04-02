@@ -175,7 +175,7 @@ const hasNotes = items.some((item) => Boolean(item.note));
       const nextBtn = slider.querySelector<HTMLButtonElement>("[data-next]");
       const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>("[data-dot]"));
       const currentEl = slider.querySelector<HTMLElement>("[data-current]");
-      const intervalTime = Number(slider.dataset.interval ?? "5000");
+      const intervalTime = Number(slider.dataset.interval ?? "9000");
 
       if (!slides.length) return;
 

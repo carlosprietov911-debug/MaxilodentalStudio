@@ -1,12 +1,12 @@
 ---
-import heroGeneral    from "../../../assets/hero-general.png"; // 👈 imagen slide 1
-import heroYessica   from "../../../assets/yessicaservicios.png"; // 👈 reemplaza con tu imagen slide 2
-import heroTecnologia from "../../../assets/hero-servicios.png"; // 👈 reemplaza con tu imagen slide 3
+import heroGeneral    from "../../../assets/hero-general.png";
+import heroYessica   from "../../../assets/yessicaservicios.png";
+import heroTecnologia from "../../../assets/hero-servicios.png";
 
 import HeroServiciosSlider from "../../ui/HeroServiciosSlider.astro";
 
 const slides = [
-  /* ── 1. General de la clínica ──────────────────────────────────── */
+  /* ── 1. General de la clínica ── */
   {
     image: heroGeneral,
     alt: "Clínica Maxilodental Studio — atención odontológica integral",
@@ -43,7 +43,7 @@ const slides = [
     tags: ["Testimonios reales", "Atención personalizada", "Resultados naturales"],
   },
 
-  /* ── 2. Servicios especializados ───────────────────────────────── */
+  /* ── 2. Servicios especializados ── */
   {
     image: heroYessica,
     alt: "Servicios odontológicos especializados en Maxilodental Studio",
@@ -79,6 +79,8 @@ const slides = [
     ],
     tags: ["Implantes dentales", "Prótesis híbridas", "Cirugía de cordales"],
   },
+
+  /* ── 3. Tecnología y rehabilitación ── */
   {
     image: heroTecnologia,
     alt: "Radiografía dental sostenida por manos con guantes",
@@ -114,14 +116,8 @@ const slides = [
     ],
     tags: ["Especialistas", "Tecnología digital", "Atención personalizada"],
   },
-  
-  
-  
-  
-
-
-  
 ];
 ---
 
-<HeroServiciosSlider slides={slides} autoplay={true} interval={6500} />
+<!-- ✅ interval aumentado a 9000ms (9 segundos) -->
+<HeroServiciosSlider slides={slides} autoplay={true} interval={9000} />

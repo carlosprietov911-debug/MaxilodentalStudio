@@ -31,7 +31,10 @@ const multi = slides.length > 1;
 // ── Clases compartidas ────────────────────────────────────────────────────────
 const IMG_CLS = "relative z-10 h-auto w-full object-contain mask-fade-bottom transition duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01] drop-shadow-hero";
 const BTN_NAV = "group relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#e2d5d5] bg-white/90 shadow-[0_4px_14px_rgba(36,23,23,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(36,23,23,0.14)]";
+
+// ✅ Tamaños correctos — máximo 750px (escala Vercel) en lugar de 3840px
 const IMG_SIZES = "(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 608px";
+const IMG_WIDTHS = [420, 640, 750];
 ---
 
 <section
@@ -70,14 +73,18 @@ const IMG_SIZES = "(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 608px";
                       class={`${IMG_CLS} ${i === 0 ? "hero-zoom-in" : ""}`}
                     />
                   ) : (
+                    // ✅ widths y sizes explícitos — evita que Vercel use 3840px
                     <Picture
                       src={slide.image}
                       alt={slide.alt}
+                      widths={IMG_WIDTHS}
+                      sizes={IMG_SIZES}
                       formats={["avif", "webp"]}
                       fallbackFormat="webp"
-                      quality={i === 0 ? "high" : "mid"}
-                      priority={i === 0}
-                      sizes={IMG_SIZES}
+                      quality={i === 0 ? 75 : 65}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchpriority={i === 0 ? "high" : "auto"}
+                      decoding={i === 0 ? "sync" : "async"}
                       class={`${IMG_CLS} ${i === 0 ? "hero-zoom-in" : ""}`}
                     />
                   )}
@@ -153,7 +160,7 @@ const IMG_SIZES = "(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 608px";
       </div>
     </div>
 
-    {/* ── Navegación (fuera del loop, única instancia) ── */}
+    {/* ── Navegación ── */}
     {multi && (
       <div class="mt-10 flex items-center gap-3 px-1">
 

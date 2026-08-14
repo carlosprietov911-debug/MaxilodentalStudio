@@ -3,6 +3,7 @@ import { Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
 import brandLogo from "../../../assets/Logotipo1.svg?url";
+import SectionOrnament from "../../ui/SectionOrnament.astro";
 
 // ─── Importa aquí las imágenes de cada servicio ───────────────────────────
 import servicio1 from "../../../assets/protesishibridas.svg";
@@ -115,7 +116,12 @@ const servicios: Servicio[] = [
 
 <!-- BUG FIX: eliminado array `enfoque` declarado pero nunca usado en el template -->
 
-<section id="servicios1" class="scroll-mt-6 px-6 py-14 md:py-16 lg:px-10 lg:py-18">
+<section id="servicios1" class="relative scroll-mt-6 px-6 py-14 md:py-16 lg:px-10 lg:py-18">
+  <SectionOrnament
+    variant="molar"
+    tone="ink"
+    class="pointer-events-none absolute -right-16 -top-10 hidden w-72 opacity-[0.05] lg:block"
+  />
   <div class="mx-auto max-w-7xl">
     <nav class="mb-5 flex items-center gap-3 text-sm font-medium text-[#7a7272]">
       <a href="/" class="transition hover:text-[#241717]">Inicio</a>
@@ -157,6 +163,8 @@ const servicios: Servicio[] = [
     <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
       {servicios.map((servicio, index) => (
         <article
+          data-reveal
+          data-reveal-delay={String((index % 3) * 90)}
           class={`group flex min-h-96 flex-col overflow-hidden rounded-3xl border md:min-h-106 ${
             servicio.activo
               ? "border-[#ece3e3] bg-white shadow-[0_10px_26px_rgba(0,0,0,0.045)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(0,0,0,0.075)]"
@@ -271,7 +279,7 @@ const servicios: Servicio[] = [
 <section class="px-6 py-14 lg:px-10 lg:py-20">
   <div class="mx-auto max-w-7xl border-y border-[#e6dddd] py-14">
     
-    <div class="mx-auto max-w-4xl text-center">
+    <div class="mx-auto max-w-4xl text-center" data-reveal>
       <p class="text-[10.5px] font-medium uppercase tracking-[0.32em] text-[#9a8c8c]">
         Nuestro enfoque
       </p>
@@ -291,10 +299,10 @@ const servicios: Servicio[] = [
 
     <!-- GRID -->
     <div class="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-3">
-      
+
       <!-- CARD -->
-      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
-        
+      <div data-reveal class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+
         <!-- glow -->
         <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(77,180,191,0.12),transparent_60%)]"></div>
 
@@ -314,8 +322,8 @@ const servicios: Servicio[] = [
       </div>
 
       <!-- CARD -->
-      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
-        
+      <div data-reveal data-reveal-delay="100" class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+
         <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(243,217,212,0.18),transparent_60%)]"></div>
 
         <div class="relative z-10">
@@ -334,8 +342,8 @@ const servicios: Servicio[] = [
       </div>
 
       <!-- CARD -->
-      <div class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
-        
+      <div data-reveal data-reveal-delay="200" class="group relative overflow-hidden rounded-[1.4rem] border border-white/50 bg-white/50 px-6 py-6 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.06)]">
+
         <div class="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-[radial-gradient(circle_at_20%_0%,rgba(77,180,191,0.12),transparent_60%)]"></div>
 
         <div class="relative z-10">

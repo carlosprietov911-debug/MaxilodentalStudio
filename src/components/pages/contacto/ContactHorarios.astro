@@ -8,7 +8,7 @@ import { contactoData } from "../../../data/contacto";
 >
   <div class="mx-auto max-w-7xl">
     <div class="grid gap-4 sm:gap-6 xl:grid-cols-[0.88fr_1.12fr]">
-      <div class="rounded-[28px] border border-white/80 bg-white/84 p-5 shadow-[0_14px_35px_rgba(20,20,20,0.06)] backdrop-blur sm:rounded-4xl sm:p-6 md:rounded-[36px] md:p-8">
+      <div data-reveal class="rounded-[28px] border border-white/80 bg-white/84 p-5 shadow-[0_14px_35px_rgba(20,20,20,0.06)] backdrop-blur sm:rounded-4xl sm:p-6 md:rounded-[36px] md:p-8">
         <p class="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a28780] sm:text-[11px] sm:tracking-[0.24em]">
           Horarios
         </p>
@@ -56,7 +56,7 @@ import { contactoData } from "../../../data/contacto";
         </a>
       </div>
 
-      <div class="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div class="grid gap-3 sm:gap-4 md:grid-cols-2 xl:grid-cols-3" data-reveal data-reveal-delay="100">
         {
           contactoData.horarios.map((item) => (
             <div class="rounded-[22px] border border-white/80 bg-white/84 p-5 shadow-[0_12px_30px_rgba(20,20,20,0.06)] backdrop-blur sm:rounded-[26px] md:rounded-[30px] md:p-6">

@@ -65,7 +65,7 @@ const iconBtn = "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl
   <div class="mx-auto max-w-7xl">
 
     <!-- Encabezado -->
-    <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+    <div class="mx-auto mb-12 max-w-3xl text-center md:mb-16" data-reveal>
       <span class="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#4db4bf] shadow-sm ring-1 ring-black/5 backdrop-blur-md">
         Ubicación y atención
       </span>
@@ -81,7 +81,7 @@ const iconBtn = "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl
     <div class="grid items-start gap-8 sm:gap-10 lg:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] lg:gap-12">
 
       <!-- ── Columna izquierda ── -->
-      <div class="relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/78 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] ring-1 ring-black/5 backdrop-blur-xl sm:p-6 md:p-8 lg:p-10">
+      <div data-reveal class="relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/78 p-5 shadow-[0_20px_60px_rgba(15,23,42,0.08)] ring-1 ring-black/5 backdrop-blur-xl sm:p-6 md:p-8 lg:p-10">
 
         <div class="pointer-events-none absolute inset-0" aria-hidden="true">
           <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#4db4bf]/35 to-transparent"></div>
@@ -204,7 +204,7 @@ const iconBtn = "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl
       </div>
 
       <!-- ── Columna derecha: galería ── -->
-      <div class="relative min-w-0">
+      <div data-reveal data-reveal-delay="120" class="relative min-w-0">
         <div class="relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/72 p-3 shadow-[0_20px_60px_rgba(15,23,42,0.10)] ring-1 ring-black/5 backdrop-blur-xl sm:p-4 md:p-5">
           <div class="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#4db4bf]/30 to-transparent"></div>
 

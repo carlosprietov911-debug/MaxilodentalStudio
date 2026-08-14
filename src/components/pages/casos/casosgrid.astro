@@ -73,8 +73,8 @@ const casos: Caso[] = await Promise.all(
 <section id="casos" class="mt-6 md:mt-10">
   <div class="mx-auto max-w-7xl px-6 pb-24 md:pb-28 lg:px-10 lg:pb-32">
     <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
-      {casos.map((caso) => (
-        <li class="flex">
+      {casos.map((caso, index) => (
+        <li class="flex" data-reveal data-reveal-delay={String((index % 3) * 90)}>
           <a
             href={`/casosclinicos/${caso.slug}`}
             class="group flex w-full flex-col overflow-hidden rounded-[1.6rem] border border-white/70 bg-white/80 shadow-[0_14px_35px_rgba(0,0,0,0.06)] backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.08)]"

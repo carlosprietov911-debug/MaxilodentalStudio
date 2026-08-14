@@ -1,15 +1,22 @@
 ---
 import { Picture } from "astro:assets";
 import doctoraImg from "../../../assets/Doctora_f.png";
+import SectionOrnament from "../../ui/SectionOrnament.astro";
 ---
 
 <section
   id="about"
   class="relative overflow-hidden px-6 py-16 md:px-10 lg:px-12 lg:py-24"
 >
+  <SectionOrnament
+    variant="arc"
+    tone="rose"
+    class="pointer-events-none absolute -left-16 top-10 hidden w-72 opacity-40 lg:block"
+  />
+
   <div class="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
     <!-- COLUMNA IZQUIERDA -->
-    <div class="relative mx-auto w-full max-w-120">
+    <div data-reveal class="relative mx-auto w-full max-w-120">
       <!-- halo suave -->
       <div
         aria-hidden="true"
@@ -46,8 +53,13 @@ import doctoraImg from "../../../assets/Doctora_f.png";
     </div>
 
     <!-- COLUMNA DERECHA -->
-    <div class="mx-auto w-full max-w-155 text-center lg:mx-0 lg:text-left">
-      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-[#775757]">
+    <div
+      data-reveal
+      data-reveal-delay="120"
+      class="mx-auto w-full max-w-155 text-center lg:mx-0 lg:text-left"
+    >
+      <p class="mb-4 flex items-center justify-center gap-2.5 text-sm font-semibold uppercase tracking-[0.22em] text-[#775757] lg:justify-start">
+        <span aria-hidden="true" class="h-px w-6 bg-[#56bcc0]/60"></span>
         Sobre nosotros
       </p>
 

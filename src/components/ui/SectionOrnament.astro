@@ -1,0 +1,103 @@
+---
+/**
+ * Motivo decorativo abstracto, inspirado en odontología (curva de sonrisa,
+ * silueta de cúspide molar, cluster de precisión tipo molécula) sin caer en
+ * el cliché de "diente gigante". Puramente ambiental: aria-hidden, sin
+ * interacción, muy bajo contraste.
+ *
+ * Uso: <SectionOrnament variant="arc" tone="brand" class="absolute -top-10 right-0 w-72 opacity-40" />
+ */
+interface Props {
+  variant?: "arc" | "molar" | "molecule" | "grid";
+  tone?: "brand" | "rose" | "ink";
+  class?: string;
+}
+
+const { variant = "arc", tone = "brand", class: className = "" } = Astro.props as Props;
+
+const toneColor: Record<string, string> = {
+  brand: "#2AA7B0",
+  rose: "#C9958A",
+  ink: "#241717",
+};
+
+const color = toneColor[tone] ?? toneColor.brand;
+const gridId = `ornament-grid-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+{
+  variant === "arc" && (
+    <svg
+      viewBox="0 0 400 200"
+      fill="none"
+      aria-hidden="true"
+      class={className}
+      style={`color:${color}`}
+    >
+      <path
+        d="M8 40C90 150 310 150 392 40"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linecap="round"
+        opacity="0.55"
+      />
+      <path
+        d="M46 8C120 92 280 92 354 8"
+        stroke="currentColor"
+        stroke-width="1"
+        stroke-linecap="round"
+        opacity="0.28"
+      />
+    </svg>
+  )
+}
+
+{
+  variant === "molar" && (
+    <svg
+      viewBox="0 0 240 240"
+      fill="none"
+      aria-hidden="true"
+      class={className}
+      style={`color:${color}`}
+    >
+      <path
+        d="M120 14c-24 0-31 16-48 16-22 0-38 20-38 46 0 20 8 34 8 58 0 26 10 46 24 78 6 14 14 22 22 22 12 0 12-32 32-32s20 32 32 32c8 0 16-8 22-22 14-32 24-52 24-78 0-24 8-38 8-58 0-26-16-46-38-46-17 0-24-16-48-16Z"
+        stroke="currentColor"
+        stroke-width="1.2"
+        opacity="0.4"
+      />
+    </svg>
+  )
+}
+
+{
+  variant === "molecule" && (
+    <svg
+      viewBox="0 0 160 120"
+      fill="none"
+      aria-hidden="true"
+      class={className}
+      style={`color:${color}`}
+    >
+      <path d="M22 90 78 30 138 66 100 100" stroke="currentColor" stroke-width="1" opacity="0.4" />
+      <circle cx="22" cy="90" r="5" fill="currentColor" opacity="0.5" />
+      <circle cx="78" cy="30" r="7" fill="currentColor" opacity="0.65" />
+      <circle cx="138" cy="66" r="4.5" fill="currentColor" opacity="0.4" />
+      <circle cx="100" cy="100" r="3.5" fill="currentColor" opacity="0.35" />
+    </svg>
+  )
+}
+
+{
+  variant === "grid" && (
+    <svg aria-hidden="true" class={className} style={`color:${color}`}>
+      <defs>
+        <pattern id={gridId} width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1.4" cy="1.4" r="1.4" fill="currentColor" opacity="0.35" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill={`url(#${gridId})`} />
+    </svg>
+  )
+}

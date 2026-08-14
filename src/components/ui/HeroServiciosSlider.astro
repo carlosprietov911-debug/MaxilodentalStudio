@@ -51,7 +51,7 @@ const IMG_WIDTHS = [420, 640, 750];
         data-slider-track
       >
         {slides.map((slide, i) => (
-          <article class="min-w-full">
+          <article class="min-w-full" aria-hidden={i === 0 ? "false" : "true"} data-slide={i}>
             <div class="grid items-center gap-8 lg:grid-cols-[1.02fr_.98fr] lg:gap-12">
 
               {/* ── Imagen ── */}
@@ -218,6 +218,7 @@ const IMG_WIDTHS = [420, 640, 750];
 
     const dots     = [...root.querySelectorAll("[data-slider-dot]")] as HTMLElement[];
     const counters = [...root.querySelectorAll("[data-slider-counter]")] as HTMLElement[];
+    const panels   = [...track.children] as HTMLElement[];
     const rmo      = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ap       = (root as HTMLElement).dataset.autoplay === "true";
     const ms       = Number((root as HTMLElement).dataset.interval ?? 6000);
@@ -229,6 +230,10 @@ const IMG_WIDTHS = [420, 640, 750];
       cur = ((n % total) + total) % total;
 
       track!.style.transform = `translate3d(-${cur * 100}%,0,0)`;
+
+      panels.forEach((panel, i) => {
+        panel.setAttribute("aria-hidden", i === cur ? "false" : "true");
+      });
 
       dots.forEach((d, i) => {
         const on = i === cur;

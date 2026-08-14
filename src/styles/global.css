@@ -3,6 +3,7 @@
 @import "@fontsource/montserrat/500.css";
 @import "@fontsource/montserrat/600.css";
 @import "@fontsource/montserrat/700.css";
+@import "@fontsource/montserrat/800.css";
 @import "@fontsource/lato/300.css";
 @import "@fontsource/lato/400.css";
 @import "@fontsource/lato/700.css";
@@ -11,37 +12,154 @@
 @import "@fontsource/dancing-script/500.css";
 @import "@fontsource/dancing-script/600.css";
 @import "@fontsource/dancing-script/700.css";
+
 .font-dancing {
   font-family: "Dancing Script", cursive;
 }
-  :root {
-    --font-body: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    --font-title: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+/* ────────────────────────────────────────────────────────────────
+   SISTEMA DE DISEÑO
+   Tokens con namespace propio (brand-*, ink, surface-*, soft/organic,
+   elevated/floating) para no colisionar con las utilidades por
+   defecto de Tailwind (rounded-lg, shadow-md, etc.) que se siguen
+   usando tal cual en el resto del código.
+   ──────────────────────────────────────────────────────────────── */
+@theme {
+  --font-body: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-title: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Color — cálido, clínico sin ser frío */
+  --color-ink: #1c1616;
+  --color-ink-soft: #4b3f3f;
+  --color-ink-muted: #6f6363;
+  --color-ink-faint: #8f8080;
+
+  --color-surface: #dcd4d4;
+  --color-surface-soft: #f6f1ef;
+  --color-surface-card: #ffffff;
+
+  --color-brand: #2aa7b0;
+  --color-brand-light: #4db4bf;
+  --color-brand-dark: #227e85;
+  --color-brand-50: #eef8f8;
+
+  --color-accent-rose: #f3d9d4;
+  --color-accent-rose-deep: #ead6cf;
+
+  --color-contrast: #171717;
+  --color-contrast-deep: #241717;
+
+  /* Radios — de sutil a orgánico */
+  --radius-soft: 1.25rem;
+  --radius-organic: 1.85rem;
+  --radius-organic-lg: 2.5rem;
+  --radius-organic-xl: 3.25rem;
+
+  /* Sombras — con tinte cálido, no gris neutro */
+  --shadow-soft: 0 10px 28px -10px rgba(36, 23, 23, 0.14);
+  --shadow-elevated: 0 24px 60px -24px rgba(36, 23, 23, 0.22);
+  --shadow-floating: 0 40px 100px -32px rgba(20, 14, 14, 0.32);
+
+  /* Motion */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 6.5rem;
+}
+
+body {
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 22%, transparent);
+  color: var(--color-contrast-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Contador editorial reutilizable (numeración de secciones/cards) */
+.numeral {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.28em;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   SCROLL REVEAL
+   Aparición progresiva al entrar en viewport. Se activa vía JS
+   (src/scripts/scroll-reveal.js) añadiendo .is-visible; si JS no
+   corre o el usuario prefiere menos movimiento, el contenido queda
+   visible igualmente (nunca oculto por accidente).
+   ──────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
+    transition-delay: var(--reveal-delay, 0ms);
   }
 
-  html {
-    -webkit-text-size-adjust: 100%;
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  body {
-    font-family: var(--font-body);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  [data-reveal-scale] {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+    transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
+    transition-delay: var(--reveal-delay, 0ms);
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-title);
+  [data-reveal-scale].is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
+}
 
+/* Sin JS: no dejar contenido invisible */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.js-reveal-ready) [data-reveal],
+  html:not(.js-reveal-ready) [data-reveal-scale] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   ANIMACIONES COMPARTIDAS
+   Nombres únicos (sin duplicados) usados vía animate-[nombre_...]
+   en varios componentes.
+   ──────────────────────────────────────────────────────────────── */
 @layer utilities {
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
   @keyframes softFloat {
-    0%,100% { transform: translateY(0); }
-    50%     { transform: translateY(-6px); }
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
   }
   @keyframes shine {
     0%   { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
@@ -49,17 +167,16 @@
     60%  { opacity: 0; }
     100% { transform: translateX(140%) skewX(-12deg); opacity: 0; }
   }
-}
-@keyframes fadeUp {
-  10% {
-    opacity: 1;
-    transform: translateY(22px) scale(2);
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  @keyframes drawLine {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
   }
 }
+
 @utility mask-fade-bottom {
   mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
@@ -93,4 +210,15 @@
     transparent 100%
   );
   mask-composite: intersect;
+}
+
+/* Red de seguridad global: si el usuario prefiere menos movimiento,
+   toda animación/transición se reduce a algo casi instantáneo. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
